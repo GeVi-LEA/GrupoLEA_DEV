@@ -2,9 +2,17 @@
 include 'assets/js/graficas_entradas_js.php';
 ?>
 
+<ul class="nav nav-pills mb-3 mt-3" id="tabEntradas" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="lista-tab" data-toggle="tab" href="#lista" role="tab" aria-controls="lista" aria-selected="true">Lista</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="grafica-tab" data-toggle="tab" href="#grafica" role="tab" aria-controls="grafica" aria-selected="false">Gráfica</a>
+    </li>
 
-<div class='row' style="margin-top:30px;">
-    <div class='col-12' id="div-lista">
+</ul>
+<div class="tab-content" id="tabEntradasContent">
+    <div class="tab-pane fade show active" id="lista" role="tabpanel" aria-labelledby="lista-tab">
         <div class="row mt-1 req-estados">
             <div class="col-5 div-estados" id="divEstados">
                 <a class="<?= isset($idEst) ? '' : 'estatus-hover' ?>" href="<?= principalUrl ?>?controller=Servicios&action=ensacado"><i title="Ver todas las entradas" class="i-list-ol fas fa-list-ol"></i></a>
@@ -20,10 +28,8 @@ include 'assets/js/graficas_entradas_js.php';
                 <h5>LOGISTICA</h5>
             </div>
             <div class="col-4 menu-iconos d-flex justify-content-end">
-
-                <div class="mr-1"><i id="lista" title="Lista" data-tipo="lista" class="btn-tab material-icons fa-solid fa-list" style="color:orange;"></i></div>
-                <div class="mr-1"><i id="grafica" title="Gráfica" data-tipo="grafica" class="btn-tab material-icons fa-solid fa-chart-simple " style="color:blue;"></i></div>
-
+                <div class="mr-1"><a class="nav-link active" id="lista-tab" data-toggle="tab" href="#lista" role="tab" aria-controls="lista" aria-selected="true">Lista</a></div>
+                <div class="mr-1"><a class="nav-link" id="grafica-tab" data-toggle="tab" href="#grafica" role="tab" aria-controls="grafica" aria-selected="false">Gráfica</a></div>
                 <div class="mr-1"><i id="preciosServClientes" title="Precios servicios clientes" class="i-edit material-icons fa-solid fa-file-invoice-dollar"></i></div>
                 <div class="mr-1"><i id="entradaSalida" title="Entrada / Salida" class="i-clip material-icons fa-solid fa-file-circle-plus"></i></div>
                 <div class="mr-3"><i id="exportar" title="Exportar excel" class="i-excel material-icons fas fa-file-excel"></i></div>
@@ -231,7 +237,7 @@ include 'assets/js/graficas_entradas_js.php';
             </div>
         </div>
 
-        <!-- <div class="modal fade modal-servicio" id="editarServicioModal2" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal fade modal-servicio" id="editarServicioModal2" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
             <div class="modal-dialog m-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header m-title justify-content-between">
@@ -244,63 +250,55 @@ include 'assets/js/graficas_entradas_js.php';
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
 
+        ...
     </div>
-    <div class='col-12' id="div-grafica" style="display:none">
+    <div class="tab-pane fade" id="grafica" role="tabpanel" aria-labelledby="grafica-tab">
         <div class='row'>
             <div class='col-md-5 col-12'>
                 <div id='chart_entradas' style='min-height:500px;'></div>
             </div>
             <div class='col-md-7 col-12'>
-                <div class='row' style="float: right;">
-                    <div class="col-4 menu-iconos d-flex justify-content-end">
 
-                        <div class="mr-1"><i id="lista" title="Lista" data-tipo="lista" class="btn-tab material-icons fa-solid fa-list" style="color:orange;"></i></div>
-                        <div class="mr-1"><i id="grafica" title="Gráfica" data-tipo="grafica" class="btn-tab material-icons fa-solid fa-chart-simple " style="color:blue;"></i></div>
-
-                        <div class="mr-1"><i id="preciosServClientes" title="Precios servicios clientes" class="i-edit material-icons fa-solid fa-file-invoice-dollar"></i></div>
-                        <div class="mr-1"><i id="entradaSalida" title="Entrada / Salida" class="i-clip material-icons fa-solid fa-file-circle-plus"></i></div>
-                    </div>
-
-                    <!-- <div class='col-md-2 col-12'>
-                        <div class="mr-1"><i id="lista" title="Lista" data-tipo="lista" class="btn-tab material-icons fa-solid fa-list" style="color:orange;"></i></div>
+                <div class='row' style="float: right;margin-top: -40px;">
+                    <div class='col-md-2 col-12'>
+                        <!-- <div class="mr-1"> -->
+                        <i id="lista-tab2" title="Lista" href="#lista" class="i-edit material-icons fa-solid fa-file-invoice-dollar"></i>
+                        <!-- </div> -->
+                        <!-- <a class="nav-link active" id="lista-tab2" data-toggle="tab" href="#lista" role="tab" aria-controls="lista" aria-selected="false">Lista</a> -->
                     </div>
                     <div class='col-md-2 col-12'>
-                        <div class="mr-1"><i id="grafica" title="Gráfica" data-tipo="grafica" class="btn-tab material-icons fa-solid fa-chart-simple " style="color:blue;"></i></div>
-                    </div> -->
+                        <a class="nav-link" id="grafica-tab2" data-toggle="tab" href="#grafica" role="tab" aria-controls="grafica" aria-selected="true">Gráfica</a>
+                    </div>
 
-                    <!-- <div class='col-md-2 col-12'>
+                    <div class='col-md-2 col-12'>
                         <div class="mr-1"><i id="preciosServClientes2" title="Precios servicios clientes" class="i-edit material-icons fa-solid fa-file-invoice-dollar"></i></div>
                     </div>
                     <div class='col-md-2 col-12'>
                         <div class="mr-1"><i id="entradaSalida2" title="Entrada / Salida" class="i-clip material-icons fa-solid fa-file-circle-plus"></i></div>
-                    </div> -->
+                    </div>
 
                 </div>
-                <div class='row' style="margin-top: 30px;">
-
-
-                    <h1 id="tituloestatus" style="border-radius: 10px; text-align: center; padding: 10px;"></h1>
-                    <table id="tabla_estatus" class='table stripe' style='width:100%'>
-                        <thead>
-                            <th hidden>id</th>
-                            <th hidden>idensacado</th>
-                            <th>FT/AT</th>
-                            <th>NUM. UNIDAD</th>
-                            <th>CLIENTE</th>
-                            <th>FECHA LLEGADA</th>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
+                <h1 id="tituloestatus" style="border-radius: 10px; text-align: center; padding: 10px;"></h1>
+                <table id="tabla_estatus" class='table stripe' style='width:100%'>
+                    <thead>
+                        <th hidden>id</th>
+                        <th hidden>idensacado</th>
+                        <th>FT/AT</th>
+                        <th>NUM. UNIDAD</th>
+                        <th>CLIENTE</th>
+                        <th>FECHA LLEGADA</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
 
     </div>
-</div>
 
+</div>
 
 <script src="<?= root_url ?>views/servicios/assets/js/servicios.js"></script>
 

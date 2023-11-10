@@ -35,6 +35,28 @@
     <script>
     let __url__ = "<?php echo root_url; ?>";
     localStorage.setItem("_URL_", __url__);
+    // var elmenu;
+
+    // function selectedMenu(menu) {
+
+    // menu.target.parentElement.className = "selected";
+    ////console.log(menu.target.parent());
+    // }
+
+    // $(document).ready(function() {
+    // if ((localStorage.getItem("elmenu") != null) && (localStorage.getItem("elmenu") != "")) {
+    // selectedMenu(localStorage.getItem("elmenu"));
+    // }
+    // $("#aside a").click(function(e) {
+    // elmenu = e;
+    // localStorage.setItem("elmenu", elmenu);
+    // console.log("el menu: ", localStorage.getItem("elmenu"));
+    //// e.preventDefault();
+    //// elmenu = e.target.parentElement;
+    // selectedMenu(e);
+
+    // });
+    // });
     </script>
 
 </head>

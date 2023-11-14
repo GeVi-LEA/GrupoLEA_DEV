@@ -7,6 +7,9 @@ var data_estatus = [];
 var data_colores = [];
 $(document).ready(function() {
 
+    $("#div-lista").hide()
+    $("#div-grafica").show();
+    chart_productos();
 
     $(".btn-tab").unbind();
     $(".btn-tab").click(function() {
@@ -127,6 +130,7 @@ const chart_productos = () => {
 }
 var html = "";
 var servicios;
+var table;
 
 function llenatablaestatus(id_estatus, estatus, clave) {
     $("#tituloestatus").html("");
@@ -154,26 +158,47 @@ function llenatablaestatus(id_estatus, estatus, clave) {
 
                     <td class="px-0 mx-0"><strong>${resp.servicios[x].numUnidad}</strong></td>
                     <td><span>${resp.servicios[x].nombreCliente}</span></td>
-                    <td>${resp.servicios[x].fecha_entrada == '' ? '' : resp.servicios[x].fecha_entrada}</td>
+                    <td>${resp.servicios[x].fecha_entrada == null ? '' : moment(resp.servicios[x].fecha_entrada).format("DD/MM/YYYY hh:mm:ss")}</td>
                 </tr>       `
 
         }
         $("#tituloestatus").html(estatus).removeClass().addClass(getClaseEstado(clave));
         $("#tabla_estatus tbody").html("");
-        $('#tabla_estatus').DataTable().clear().destroy();
+        // $('#tabla_estatus').DataTable().clear().destroy();
         $("#tabla_estatus tbody").html(html);
-
-        $("#tabla_estatus").DataTable({
+        new DataTable('#tabla_estatus', {
+            dom: 'Bfrtip',
+            retrieve: true,
             language: {
-                dom: 'Bfrtip',
-                retrieve: true,
                 url: '<?php echo URL; ?>assets/libs/datatables/es-MX.json',
-                order: [
-                    [3, 'desc']
-                ]
             },
+            order: [
+                [5, 'desc']
+            ],
+            columns: [null, null, {
+                    "width": "5%"
+                },
+                {
+                    "width": "15%"
+                },
+                {
+                    "width": "50%"
+                },
+                {
+                    "width": "30%"
+                },
+            ],
+            buttons: [
+                'print',
+                {
+                    extend: 'excelHtml5',
+                    // className: 'btn btnExcel',
+                    title: `Reporte de entradas ${estatus} ${formatDate(new Date())}`
+                },
+                'pdf',
+            ],
         });
-        // chart_productos();
+
     }).fail(resp => {}).catch(resp => {
         mensajeError('Ocurrio un problema en la peticion en el servidor, favor de reportar a los administradores');
     });

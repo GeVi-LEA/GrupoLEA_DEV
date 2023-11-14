@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="<?php echo URL; ?>assets/libs/datatables/datatables.min.css">
     <script src="<?php echo URL; ?>assets/libs/datatables/datatables.min.js"></script>
 
+
     <link rel="stylesheet" type="text/css" href="<?php echo URL; ?>assets/js/scripts/forms/select2/css/select2.min.css">
     <script src="<?php echo URL; ?>assets/js/scripts/forms/select2/js/select2.min.js" type="text/javascript"></script>
     <script>

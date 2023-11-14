@@ -1352,6 +1352,54 @@ $(document).ready(function () {
 			mensajeError("La unidad tiene pendientes, no se puede liberar");
 		}
 	});
+	$("#btnLiberar").click(function (e) {
+		if (validaLiberacion()) {
+			$.confirm({
+				title: "<span class='material-icons i-warning'>warning</span><span>¡Atención!<span>",
+				content: "<b>¿Desea liberar la unidad?</b>",
+				type: "orange",
+				typeAnimated: true,
+				animation: "zoom",
+				closeAnimation: "right",
+				backgroundDismiss: false,
+				backgroundDismissAnimation: "shake",
+				buttons: {
+					tryAgain: {
+						text: "Salida",
+						btnClass: "btn btn-warning",
+						action: function () {
+							var id = $("#ensacadoForm").find("#id").val();
+							if (id != "") {
+								$.ajax({
+									data: { id: id },
+									url: "?ajax&controller=Servicios&action=liberarUnidad",
+									type: "POST",
+									dataType: "json",
+									success: function (r) {
+										// console.log(r);
+										if (r.error != false) {
+											mensajeCorrecto(r.mensaje);
+										} else {
+											mensajeError(r.mensaje);
+										}
+									},
+									error: function (r) {
+										console.log(r.responseText);
+										mensajeError(
+											"Algo salio mal,  contacte al administrador."
+										);
+									},
+								});
+							}
+						},
+					},
+					Cancelar: function () {},
+				},
+			});
+		} else {
+			mensajeError("La unidad tiene pendientes, no se puede liberar");
+		}
+	});
 
 	function validaLiberacion() {
 		var sumcantidad = 0;
@@ -2103,6 +2151,7 @@ function agregarLotesEnsacado(form) {
 		selectLote.attr("disabled", false).attr("hidden", false);
 		$("#producto").attr("disabled", true).attr("hidden", true);
 		$("#alias").attr("disabled", true).attr("hidden", true);
+		$("#disponible").attr("disabled", true).attr("hidden", true);
 		$("#producto").parent().find(".mr-1").hide();
 		$("#producto").parent().find(".select2 ").hide();
 		$("#alias").parent().find(".mr-1").hide();
@@ -2163,6 +2212,8 @@ function agregarLotesEnsacado(form) {
 		servicio.includes("REEMPAQUE")
 	) {
 		lote.attr("disabled", false).attr("hidden", false);
+		$("#disponible").attr("disabled", true).attr("hidden", false);
+
 		if (servicio.includes("ENSACADO")) {
 			$(".programacion").attr("style", "display:block1 !important");
 		} else {

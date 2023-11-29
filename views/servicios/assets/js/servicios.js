@@ -6,6 +6,7 @@ var divform;
 var servicios;
 var servicio_click;
 var serv_entrada;
+
 $(document).ready(function () {
 	// console.log("entra a servicios js");
 	if (typeof __url__ !== "undefined" && __url__) {
@@ -1699,20 +1700,21 @@ $(document).ready(function () {
 		} else {
 			var id = $(divForm).find("#idServicio").val();
 			var kilos = $(divForm).find(".sumcantidad").html();
-			detenerServicio(id, kilos);
+			detenerServicio(id, kilos, getUrlParameter("id"));
 		}
 	});
 
 	let servicio;
-	function detenerServicio(id, kilos = "", almacen_id = "1") {
+	function detenerServicio(id, kilos = "", entrada_id = "", almacen_id = "1") {
 		var form = $("#formEnviarAlmacen");
 		var select = $(form).find("#selectAlmacen");
+
 		$.ajax({
 			url: __url__ + "?ajax&controller=Catalogo&action=getAlmacenes",
 			type: "POST",
 			dataType: "json",
 			success: function (r) {
-				// console.log(r);
+				console.log(r);
 				if (r != false) {
 					select.find("option").not(":first").remove();
 					if (r.length != 0) {
@@ -1736,58 +1738,261 @@ $(document).ready(function () {
 		$("#idServicioEnviar").val(id);
 		$(form).find(id);
 		$(form).find($("#operacionEnviar")).val("S");
+		//OBTIENE LOS SERVICIOS PENDIENTES
 
-		// let servicio = servicios.filter((el) => el.id_servicio == id)[0];
-		$.confirm({
-			title: "<span class='material-icons i-warning'>warning</span><span>¡Atención!<span>",
-			content: "<b>¿Finalizar servicio?</b>",
-			type: "orange",
-			typeAnimated: true,
-			animation: "zoom",
-			closeAnimation: "right",
-			backgroundDismiss: false,
-			backgroundDismissAnimation: "shake",
-			buttons: {
-				tryAgain: {
-					text: "Finalizar servicio",
-					btnClass: "btn btn-warning",
-					action: function () {
-						$.ajax({
-							// data: $("#formEnviarAlmacen").serialize(),
-							data: {
-								idServicioEnviar: id,
-								operacionEnviar: "S",
-								cantidadAlmacen: kilos.replace(",", ""),
-								almacen: almacen_id,
+		var cargaspendientes;
+		var espera = 1;
+		// servicio = servicios.servicios[0];
+		$.ajax({
+			// data: $("#formEnviarAlmacen").serialize(),
+			data: {
+				id: id,
+			},
+			url: __url__ + "?ajax&controller=Servicios&action=getCargasPendientes",
+			type: "POST",
+			dataType: "json",
+			success: function (r) {
+				console.log(r);
+				cargaspendientes = r;
+				// let servicio = servicios.filter((el) => el.id_servicio == id)[0];
+				console.log(cargaspendientes);
+				if (cargaspendientes.cargaspendientes[0].pendientes == "1") {
+					var html = `
+                        <div class='row'>
+                            <div class='col-11'>
+                                <h3>Favor de ingresar los sellos de la caja</h3>
+                            </div>
+                        </div>`;
+					for (
+						var x = 0;
+						x < cargaspendientes.cargaspendientes[0].cant_puertas;
+						x++
+					) {
+						html += `
+                                <div class='row'>
+                                    <div class='col-11'>
+
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Sello ${
+																x + 1
+															}</div>
+                                            <input type="text" name="sello${
+																x + 1
+															}" class="sellos form-control" id="sello${
+							x + 1
+						}" required />
+                                        </div>
+
+                                    </div>
+                                </div>
+                        
+                            `;
+					}
+					html += `
+                        <div class='row'>
+                            <div class='col-11'>
+                                <canvas id="canvas">Su navegador no soporta canvas :( </canvas>     
+                            </div>
+                        </div>
+                    `;
+					Swal.fire({
+						title: "Servicios terminados",
+						html: html,
+						showDenyButton: true,
+						confirmButtonText: "Terminar",
+						denyButtonText: `Cancelar`,
+						didOpen: () => {
+							iniciaCanvas();
+						},
+					}).then((result) => {
+						/* Read more about isConfirmed, isDenied below */
+						if (result.isConfirmed) {
+							$.ajax({
+								// data: $("#formEnviarAlmacen").serialize(),
+								data: {
+									idServicioEnviar: id,
+									operacionEnviar: "S",
+									cantidadAlmacen: kilos.replace(",", ""),
+									almacen: almacen_id,
+									entrada_id: entrada_id,
+									sellos: getSellos(),
+									firma: getTrazado(),
+								},
+								url: "?ajax&controller=Servicios&action=finalizarServicio",
+								type: "POST",
+								dataType: "json",
+								success: function (r) {
+									console.log(r);
+									if (r.error != false) {
+										mensajeCorrecto(r.mensaje);
+									} else {
+										mensajeError(r.mensaje);
+									}
+									getServicios();
+								},
+								error: function (r) {
+									console.log(r);
+									mensajeError("Algo salio mal: " + r);
+									// mensajeError("Algo salio mal,  contacte al administrador.");
+								},
+							});
+						} else if (result.isDenied) {
+						}
+					});
+				} else {
+					// $("#enviarAlmacenModal1").modal("show");
+					// $("#enviarFinalizarServicio").unbind();
+					// $("#enviarFinalizarServicio").click(function() {
+					// if (validarDatosEnviarAlmacen()) {
+
+					$.confirm({
+						title: "<span class='material-icons i-warning'>warning</span><span>¡Atención!<span>",
+						content: "<b>¿Finalizar servicio?</b>",
+						type: "orange",
+						typeAnimated: true,
+						animation: "zoom",
+						closeAnimation: "right",
+						backgroundDismiss: false,
+						backgroundDismissAnimation: "shake",
+						buttons: {
+							tryAgain: {
+								text: "Finalizar servicio",
+								btnClass: "btn btn-warning",
+								action: function () {
+									$.ajax({
+										// data: $("#formEnviarAlmacen").serialize(),
+										data: {
+											idServicioEnviar: id,
+											operacionEnviar: "S",
+											cantidadAlmacen: servicio.kilos.replace(
+												",",
+												""
+											),
+											almacen: almacen_id,
+										},
+										url: "?ajax&controller=Servicios&action=finalizarServicio",
+										type: "POST",
+										dataType: "json",
+										success: function (r) {
+											console.log(r);
+											if (r.error != false) {
+												erpalert("", "", r.mensaje);
+											} else {
+												erpalert("error", "Error", r.mensaje);
+											}
+											getServicios();
+										},
+										error: function (r) {
+											console.log(r.responseText);
+											mensajeError(
+												"Algo salio mal,  contacte al administrador."
+											);
+										},
+									});
+								},
 							},
-							url: "?ajax&controller=Servicios&action=finalizarServicio",
-							type: "POST",
-							dataType: "json",
-							success: function (r) {
-								// console.log(r);
-								if (r.error != false) {
-									mensajeCorrecto(r.mensaje);
-								} else {
-									mensajeError(r.mensaje);
-								}
-							},
-							error: function (r) {
-								console.log(r.responseText);
-								mensajeError(
-									"Algo salio mal,  contacte al administrador."
-								);
-							},
-						});
-					},
-				},
-				Cancelar: function () {},
+							Cancelar: function () {},
+						},
+					});
+				}
+			},
+			error: function (r) {
+				console.log(r.responseText);
+				espera = 0;
+				mensajeError("Algo salio mal,  contacte al administrador.");
 			},
 		});
+
 		// } else {
 		// erpalert("error", "", "No puede estar un campo vacio.");
 		// }
 		// });
 	}
+
+	// function detenerServicio(id, kilos = "", almacen_id = "1") {
+	// 	var form = $("#formEnviarAlmacen");
+	// 	var select = $(form).find("#selectAlmacen");
+	// 	$.ajax({
+	// 		url: __url__ + "?ajax&controller=Catalogo&action=getAlmacenes",
+	// 		type: "POST",
+	// 		dataType: "json",
+	// 		success: function (r) {
+	// 			// console.log(r);
+	// 			if (r != false) {
+	// 				select.find("option").not(":first").remove();
+	// 				if (r.length != 0) {
+	// 					$(r).each(function (i, v) {
+	// 						// indice, valor
+	// 						select.append(
+	// 							'<option value="' + v.id + '">' + v.nombre + "</option>"
+	// 						);
+	// 					});
+	// 				} else {
+	// 					select.append(
+	// 						'<option value="" disabled>No hay almacenes registrados</option>'
+	// 					);
+	// 				}
+	// 			}
+	// 		},
+	// 		error: function () {
+	// 			alert("Algo salio mal, contacte al Administrador.");
+	// 		},
+	// 	});
+	// 	$("#idServicioEnviar").val(id);
+	// 	$(form).find(id);
+	// 	$(form).find($("#operacionEnviar")).val("S");
+
+	// 	// let servicio = servicios.filter((el) => el.id_servicio == id)[0];
+	// 	$.confirm({
+	// 		title: "<span class='material-icons i-warning'>warning</span><span>¡Atención!<span>",
+	// 		content: "<b>¿Finalizar servicio?</b>",
+	// 		type: "orange",
+	// 		typeAnimated: true,
+	// 		animation: "zoom",
+	// 		closeAnimation: "right",
+	// 		backgroundDismiss: false,
+	// 		backgroundDismissAnimation: "shake",
+	// 		buttons: {
+	// 			tryAgain: {
+	// 				text: "Finalizar servicio",
+	// 				btnClass: "btn btn-warning",
+	// 				action: function () {
+	// 					$.ajax({
+	// 						// data: $("#formEnviarAlmacen").serialize(),
+	// 						data: {
+	// 							idServicioEnviar: id,
+	// 							operacionEnviar: "S",
+	// 							cantidadAlmacen: kilos.replace(",", ""),
+	// 							almacen: almacen_id,
+	// 						},
+	// 						url: "?ajax&controller=Servicios&action=finalizarServicio",
+	// 						type: "POST",
+	// 						dataType: "json",
+	// 						success: function (r) {
+	// 							// console.log(r);
+	// 							if (r.error != false) {
+	// 								mensajeCorrecto(r.mensaje);
+	// 							} else {
+	// 								mensajeError(r.mensaje);
+	// 							}
+	// 						},
+	// 						error: function (r) {
+	// 							console.log(r.responseText);
+	// 							mensajeError(
+	// 								"Algo salio mal,  contacte al administrador."
+	// 							);
+	// 						},
+	// 					});
+	// 				},
+	// 			},
+	// 			Cancelar: function () {},
+	// 		},
+	// 	});
+	// 	// } else {
+	// 	// erpalert("error", "", "No puede estar un campo vacio.");
+	// 	// }
+	// 	// });
+	// }
 
 	$("#enviarFinalizarServicio").click(function () {
 		if (validarDatosEnviarAlmacen()) {
@@ -2806,4 +3011,145 @@ function getOperacionServicios($servicios) {
 		}
 	} catch (error) {}
 	return $operacion;
+}
+function getSellos() {
+	var jsonObj = [];
+	$(".sellos").each(function () {
+		item = {};
+		item[$(this).attr("name")] = $(this).val();
+		jsonObj.push(item);
+	});
+	var jsonString = JSON.stringify(jsonObj);
+	return '{"sellos":' + jsonString + "}";
+}
+
+function getUrlParameter(sParam) {
+	var sPageURL = window.location.search.substring(1),
+		sURLVariables = sPageURL.split("&"),
+		sParameterName,
+		i;
+
+	for (i = 0; i < sURLVariables.length; i++) {
+		sParameterName = sURLVariables[i].split("=");
+
+		if (sParameterName[0] === sParam) {
+			return sParameterName[1] === undefined
+				? true
+				: decodeURIComponent(sParameterName[1]);
+		}
+	}
+	return false;
+}
+function iniciaCanvas() {
+	let limpiar = document.getElementById("limpiar");
+	let canvas = document.getElementById("canvas");
+	let ctx = canvas.getContext("2d");
+	let cw = (canvas.width = 250),
+		cx = cw / 2;
+	let ch = (canvas.height = 250),
+		cy = ch / 2;
+
+	let dibujar = false;
+	let factorDeAlisamiento = 5;
+	let Trazados = [];
+	let puntos = [];
+	ctx.lineJoin = "round";
+
+	function iniciarTrazado(evt) {
+		dibujar = true;
+		//ctx.clearRect(0, 0, cw, ch);
+		puntos.length = 0;
+		ctx.beginPath();
+	}
+
+	function trazar(evt) {
+		if (dibujar) {
+			let m = oMousePos(canvas, evt);
+			puntos.push(m);
+			ctx.lineTo(m.x, m.y);
+			ctx.stroke();
+		}
+	}
+
+	canvas.addEventListener("mousedown", iniciarTrazado, false);
+	canvas.addEventListener(
+		"touchstart",
+		(event) => iniciarTrazado(event.touches[0]),
+		false
+	);
+
+	canvas.addEventListener("mouseup", redibujarTrazados, false);
+	canvas.addEventListener(
+		"touchend",
+		(event) => redibujarTrazados(event.touches[0]),
+		false
+	);
+
+	canvas.addEventListener("mouseout", redibujarTrazados, false);
+
+	canvas.addEventListener("mousemove", trazar, false);
+	canvas.addEventListener(
+		"touchmove",
+		(event) => trazar(event.touches[0]),
+		false
+	);
+
+	function reducirArray(n, elArray) {
+		let nuevoArray = [];
+		nuevoArray[0] = elArray[0];
+		for (let i = 0; i < elArray.length; i++) {
+			if (i % n == 0) {
+				nuevoArray[nuevoArray.length] = elArray[i];
+			}
+		}
+		nuevoArray[nuevoArray.length - 1] = elArray[elArray.length - 1];
+		Trazados.push(nuevoArray);
+	}
+
+	function calcularPuntoDeControl(ry, a, b) {
+		let pc = {};
+		pc.x = (ry[a].x + ry[b].x) / 2;
+		pc.y = (ry[a].y + ry[b].y) / 2;
+		return pc;
+	}
+
+	function alisarTrazado(ry) {
+		if (ry.length > 1) {
+			let ultimoPunto = ry.length - 1;
+			ctx.beginPath();
+			ctx.moveTo(ry[0].x, ry[0].y);
+			for (let i = 1; i < ry.length - 2; i++) {
+				let pc = calcularPuntoDeControl(ry, i, i + 1);
+				ctx.quadraticCurveTo(ry[i].x, ry[i].y, pc.x, pc.y);
+			}
+			ctx.quadraticCurveTo(
+				ry[ultimoPunto - 1].x,
+				ry[ultimoPunto - 1].y,
+				ry[ultimoPunto].x,
+				ry[ultimoPunto].y
+			);
+			ctx.stroke();
+		}
+	}
+
+	function redibujarTrazados() {
+		dibujar = false;
+		ctx.clearRect(0, 0, cw, ch);
+		reducirArray(factorDeAlisamiento, puntos);
+		for (let i = 0; i < Trazados.length; i++) alisarTrazado(Trazados[i]);
+	}
+
+	function oMousePos(canvas, evt) {
+		let ClientRect = canvas.getBoundingClientRect();
+		return {
+			//objeto
+			x: Math.round(evt.clientX - ClientRect.left),
+			y: Math.round(evt.clientY - ClientRect.top),
+		};
+	}
+}
+/* Enviar el trazado */
+function getTrazado() {
+	return document.getElementById("canvas").toDataURL("image/png");
+	//document.forms['incineracionForm'].submit();
 }

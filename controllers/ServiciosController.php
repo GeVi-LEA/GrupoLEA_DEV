@@ -46,6 +46,8 @@ class serviciosController
 
         $datosGrafica = $ensacado->getDataGraficas();
 
+        // $_SESSION['title'] = 'Ensacado';
+
         require_once views_root . 'servicios/lista_ensacado.php';
     }
 
@@ -711,79 +713,6 @@ class serviciosController
         return print_r(json_encode($result));
     }
 
-    // public function finalizarServicio()
-    // {
-    //     $idServicio      = isset($_POST['idServicioEnviar']) && $_POST['idServicioEnviar'] != '' ? $_POST['idServicioEnviar'] : null;
-    //     $cantidades      = isset($_POST['cantidadAlmacen']) ? $_POST['cantidadAlmacen'] : null;
-    //     $almacenes       = isset($_POST['almacen']) ? $_POST['almacen'] : null;
-    //     $operacion       = isset($_POST['operacionEnviar']) ? $_POST['operacionEnviar'] : null;
-    //     $BarreduraSucia  = isset($_POST['BarreduraSucia']) ? $_POST['BarreduraSucia'] : null;
-    //     $BarreduraLimpia = isset($_POST['BarreduraLimpia']) ? $_POST['BarreduraLimpia'] : null;
-
-    //     if ($operacion != 'E') {
-    //         $m = new ServicioMovimientoAlmacen();
-    //         $m->setAlmacen(intval($almacenes));
-    //         $m->setCantidad(Utils::quitarComas($cantidades));
-    //         $m->setIdServicio($idServicio);
-    //         $m->setOperacion($operacion);
-    //         $r        = $m->save();
-    //         $servicio = new ServicioEnsacado();
-    //         $servicio->setId($idServicio);
-    //         $r = $servicio->finalizarServicio();
-    //         if ($r) {
-    //             $result = [
-    //                 'error'   => true,
-    //                 'mensaje' => 'Se finalizo servicio.'
-    //             ];
-    //         } else {
-    //             $result = [
-    //                 'error'   => false,
-    //                 'mensaje' => 'Ocurrio un error, no se pudo finalizar.'
-    //             ];
-    //         }
-    //     } else {
-    //         $m   = new ServicioMovimientoAlmacen();
-    //         $ser = new ServicioEnsacado();
-    //         for ($i = 0; count($almacenes) > $i; $i++) {
-    //             $m->setAlmacen(intval($almacenes[$i]));
-    //             $m->setCantidad(Utils::quitarComas($cantidades[$i]));
-    //             $m->setIdServicio($idServicio);
-    //             $m->setOperacion($operacion);
-    //             $r = $m->save();
-
-    //             $ser->setId($idServicio);
-    //             $ser->setBarreduraSucia(Utils::quitarComas($BarreduraSucia[$i]));
-    //             $ser->setBarreduraLimpia(Utils::quitarComas($BarreduraLimpia[$i]));
-    //             $ser->setTotalEnsacado(Utils::quitarComas($cantidades[$i]));
-    //             $ser->setTarimas(floor((Utils::quitarComas($cantidades[$i]) / 25) / 55));
-    //             $ser->setBultos(floor(Utils::quitarComas($cantidades[$i]) / 25));
-    //             $ser->setParcial(round((((Utils::quitarComas($cantidades[$i]) / 25) / 55) - floor((Utils::quitarComas($cantidades[$i]) / 25) / 55)) * 55));
-    //             $ser->actualizaBarredura();
-    //         }
-    //         if ($r) {
-    //             $servicio = new ServicioEnsacado();
-    //             $servicio->setId($idServicio);
-    //             $r = $servicio->finalizarServicio();
-    //             if ($r) {
-    //                 $result = [
-    //                     'error'   => true,
-    //                     'mensaje' => 'Se finalizo servicio.'
-    //                 ];
-    //             } else {
-    //                 $result = [
-    //                     'error'   => false,
-    //                     'mensaje' => 'Ocurrio un error, no se pudo finalizar.'
-    //                 ];
-    //             }
-    //         } else {
-    //             $result = [
-    //                 'error'   => false,
-    //                 'mensaje' => 'Ocurrio un error, no se pudo guardar en el almacén.'
-    //             ];
-    //         }
-    //     }
-    //     return print_r(json_encode($result));
-    // }
     public function finalizarServicio()
     {
         $idServicio      = isset($_POST['idServicioEnviar']) && $_POST['idServicioEnviar'] != '' ? $_POST['idServicioEnviar'] : null;

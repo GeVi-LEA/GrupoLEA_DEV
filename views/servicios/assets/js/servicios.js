@@ -2951,50 +2951,6 @@ function diferenciaTeoricaColor(diferenciaTeorica, tolerable) {
 	}
 }
 
-function getClaseEstado($clave) {
-	switch ($clave) {
-		case "G":
-			return "estatus-gen";
-			break;
-		case "C":
-			return "estatus-cancel";
-			break;
-		case "A":
-			return "estatus-acept";
-			break;
-		case "P":
-			return "estatus-proceso";
-			break;
-		case "FIN":
-			return "estatus-fin";
-			break;
-		case "E":
-			return "estatus-enviada";
-			break;
-		case "TRS":
-			return "estatus-transito";
-			break;
-		case "PAG":
-			return "estatus-pagado";
-			break;
-		case "EMB":
-			return "estatus-embarque";
-			break;
-		case "TERM":
-			return "estatus-pagado";
-			break;
-		case "PSD":
-			return "estatus-pesado";
-			break;
-		case "PROG":
-			return "estatus-programa";
-			break;
-		case "SALIDA":
-			return "estatus-salida";
-			break;
-	}
-}
-
 function getOperacionServicios($servicios) {
 	$operacion =
 		"<i class='fa-solid fa-arrow-right i-green'  title='Descarga'></i>";

@@ -2,6 +2,8 @@
 
 require_once models_root . 'catalogos/usuario.php';
 require_once utils_root . 'email/email.php';
+require_once utils_root . 'utilsHelp.php';
+require_once utils_root . 'error_log.php';
 
 class loginController
 {
@@ -75,6 +77,13 @@ class loginController
             }
             Utils::deleteSession('random');
         }
+    }
+
+    public function perfil()
+    {
+        Utils::noLoggin();
+        $usuario = $_SESSION['usuario'];
+        require_once views_root . 'login/perfil.php';
     }
 
     public function logOut()

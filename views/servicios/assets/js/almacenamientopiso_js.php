@@ -63,9 +63,6 @@ $(document).ready(function() {
     });
     $("#cmbClientes").change(function() {
         armaInventarios().done(function() {
-
-
-
             switch ($('#InventariosTab .active')[0].id.replace("-tab", "")) {
                 case "productos":
                     setTimeout(() => {
@@ -458,8 +455,8 @@ const armaInventarios = (latab) => {
 
         /*TABLA INVENTARIOS*/
         $('#tableInventario').DataTable().clear().destroy();
-        $("#tableInventario").DataTable({
-            dom: 'Bfrtip',
+        table = $("#tableInventario").DataTable({
+            dom: 'Bfltip',
             retrieve: true,
             data: inventarios.inventarios,
             columns: [{
@@ -492,6 +489,8 @@ const armaInventarios = (latab) => {
                 url: '<?php echo URL; ?>assets/libs/datatables/es-MX.json',
             },
         });
+        table.buttons().container()
+            .appendTo($('.col-sm-6:eq(0)', table.table().container()));
         dfrd1.resolve();
         muestraGrafica(latab);
     }).fail(resp => {}).catch(resp => {
@@ -754,7 +753,7 @@ function numero2Decimales(str = "", $decimales = false, $numDecimales = 2) {
             maximumFractionDigits: $numDecimales,
         });
     } else {
-        console.log("str: ", str);
+        // console.log("str: ", str);
         $strArray = str.toString().split("/[.]/");
         if (parseInt($strArray[1]) == 0) {
             $int = parseInt(str);

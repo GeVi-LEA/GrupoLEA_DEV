@@ -554,6 +554,7 @@ class serviciosController
         $orden           = isset($_POST['orden']) && $_POST['orden'] != '' ? $_POST['orden'] : null;
         $doc_orden       = isset($_POST['doc_orden']) && $_POST['doc_orden'] != '' ? $_POST['doc_orden'] : null;
         $productoId      = isset($_POST['producto']) && $_POST['producto'] != '' ? $_POST['producto'] : null;
+        $almacen_id      = isset($_POST['almacen_id']) && $_POST['almacen_id'] != '' ? $_POST['almacen_id'] : null;
         $alias           = isset($_POST['alias']) && $_POST['alias'] != '' ? $_POST['alias'] : null;
         $observaciones   = isset($_POST['observaciones']) && $_POST['observaciones'] != '' ? $_POST['observaciones'] : null;
         $res             = true;
@@ -587,6 +588,7 @@ class serviciosController
             $servicio->setTipoTarima($tipoTarima != null ? Utils::stringToFloat($tipoTarima) : 'null');
             $servicio->setParcial($parcial != null ? Utils::stringToFloat($parcial) : 'null');
             $servicio->setProductoId($productoId);
+            $servicio->setAlmacenId($almacen_id);
             $servicio->setAlias($alias);
             $servicio->setLote($lote);
             $servicio->setOrden($orden);
@@ -726,10 +728,11 @@ class serviciosController
         $sello3          = isset($_POST['sello3']) ? $_POST['sello3'] : null;
         $entrada_id      = isset($_POST['entrada_id']) ? $_POST['entrada_id'] : null;
         $firma           = isset($_POST['firma']) ? $_POST['firma'] : null;
+        $almacen_id      = isset($_POST['almacen_id']) && $_POST['almacen_id'] != '' ? $_POST['almacen_id'] : null;
 
         if ($operacion != 'E') {
             $m = new ServicioMovimientoAlmacen();
-            $m->setAlmacen(intval($almacenes));
+            $m->setAlmacen($almacen_id);
             $m->setCantidad(Utils::quitarComas($cantidades));
             $m->setIdServicio($idServicio);
             $m->setOperacion($operacion);
@@ -949,9 +952,15 @@ class serviciosController
     public function serviciosNave()
     {
         Utils::noLoggin();
-        $idEst     = null;
-        $ensacado  = new ServicioEnsacado();
-        $servicios = $ensacado->getAll();
+        $idEst = null;
+
+        if (isset($_GET['idEst'])) {
+            $idEst = 'where s.estatus_id = ' . $_GET['idEst'];
+        }
+
+        $ensacado = new ServicioEnsacado();
+        // $servicios = $ensacado->getByEstatusId($idEst);
+        $servicios = $ensacado->getAll($idEst);
 
         require_once views_root . 'servicios/lista_servicios_nave.php';
     }

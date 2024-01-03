@@ -557,11 +557,17 @@ function viewReq(_idReq = "0") {
                     .on("mousedown, mouseup, click", function(e) {
                         clickiframe = e;
                         if (e.target.id == "btnGenerar") {
-                            // alert("aqui");
-                            getRequisiciones();
-                            setTimeout(() => {
-                                viewReq(_idReq);
-                            }, 1000);
+                            //// alert("aqui");
+                            $("iframe").on("load", function() {
+                                getRequisiciones();
+                                setTimeout(() => {
+                                    viewReq(_idReq);
+                                }, 1000);
+                            });
+
+
+
+
                         }
                     });
                 $(".form-select").select2();

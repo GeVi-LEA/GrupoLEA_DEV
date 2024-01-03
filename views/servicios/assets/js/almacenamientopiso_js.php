@@ -327,7 +327,7 @@ const armaInventarios = (latab) => {
                     label: {
                         show: true,
                         formatter: function(param) {
-                            return param.data == 0 ? '' : numero2Decimales(param.data) + ' KG (TARIMAS:' + (Math.floor((param.data / 25) / 55)) + ' SACOS:' + (Math.round((((param.data /
+                            return param.data == 0 ? '' : numero2Decimales(param.data, 0) + ' KG (TARIMAS:' + (Math.floor((param.data / 25) / 55)) + ' SACOS:' + (Math.round((((param.data /
                                     25) / 55) -
                                 Math.floor((param.data / 25) / 55)) * 55)) + ') ';
                         },
@@ -372,7 +372,7 @@ const armaInventarios = (latab) => {
                     label: {
                         show: true,
                         formatter: function(param) {
-                            return param.data == 0 ? '' : numero2Decimales(param.data) + ' KG (TARIMAS:' + (Math.floor((param.data / 25) / 55)) + ' SACOS:' + (Math.round((((param.data /
+                            return param.data == 0 ? '' : numero2Decimales(param.data, false, 0) + ' KG (TARIMAS:' + (Math.floor((param.data / 25) / 55)) + ' SACOS:' + (Math.round((((param.data /
                                     25) / 55) -
                                 Math.floor((param.data / 25) / 55)) * 55)) + ') ';
                         },
@@ -409,7 +409,7 @@ const armaInventarios = (latab) => {
                     label: {
                         show: true,
                         formatter: function(param) {
-                            return param.data == 0 ? '' : numero2Decimales(param.data) + ' KG (TARIMAS:' + (Math.floor((param.data / 25) / 55)) + ' SACOS:' + (Math.round((((param.data /
+                            return param.data == 0 ? '' : numero2Decimales(param.data, false, 0) + ' KG (TARIMAS:' + (Math.floor((param.data / 25) / 55)) + ' SACOS:' + (Math.round((((param.data /
                                     25) / 55) -
                                 Math.floor((param.data / 25) / 55)) * 55)) + ') ';
                         },

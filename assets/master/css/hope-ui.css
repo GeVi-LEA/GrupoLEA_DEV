@@ -13676,6 +13676,7 @@ th {
 	position: sticky;
 	top: 0;
 	width: 98%;
+	transition: all 800ms ease;
 }
 .iq-navbar.navs-sticky.menu-sticky {
 	position: fixed !important;
@@ -13685,6 +13686,17 @@ th {
 	-webkit-box-shadow: 1px 10px 10px 0px rgba(7, 0, 90, 0.75);
 	-moz-box-shadow: 1px 10px 10px 0px rgba(7, 0, 90, 0.75);
 	box-shadow: 1px 10px 15px -4px rgba(7, 0, 90, 0.75);
+}
+.iq-navbar.navs-sticky.menu-sticky-in {
+	position: fixed !important;
+	top: 0;
+	/*transition: all 800ms ease;*/
+	margin-top: 0 !important;
+	-webkit-box-shadow: 1px 10px 10px 0px rgba(7, 0, 90, 0.75);
+	-moz-box-shadow: 1px 10px 10px 0px rgba(7, 0, 90, 0.75);
+	box-shadow: 1px 10px 15px -4px rgba(7, 0, 90, 0.75);
+	/*width: calc(97% - 16.2rem);*/
+	width: 83vw;
 }
 .iq-navbar .dropdown .dropdown-menu[data-bs-popper] {
 	top: 110%;
@@ -14266,7 +14278,8 @@ th {
 	box-shadow: 3px 4px 10px -2px rgba(7, 0, 90, 0.75);
 }
 .footer .footer-body {
-	display: flex;
+	/* display: flex; */
+	display: flow-root !important;
 	flex-wrap: wrap;
 	justify-content: space-between;
 	padding: 0.5rem calc(var(--bs-gutter-x, 0.75rem) * 3);
@@ -17766,7 +17779,10 @@ body {
 .sidebar.sidebar-default .nav-link:not(.static-item)[aria-expanded="true"] {
 	background: var(--bs-primary);
 	color: #ffffff;
-	box-shadow: 0 10px 20px -10px rgba(var(--shadow-dark-color), 38%);
+	/* box-shadow: 0 10px 20px -10px rgba(var(--shadow-dark-color), 38%); */
+	-webkit-box-shadow: -9px 15px 10px -10px rgba(var(--shadow-dark-color), 0.74);
+	-moz-box-shadow: -9px 15px 10px -10px rgba(var(--shadow-dark-color), 0.74);
+	box-shadow: -9px 15px 10px -10px rgba(var(--shadow-dark-color), 0.74);
 }
 .sidebar.sidebar-default
 	.nav-link:not(.static-item):hover:not(.active):not([aria-expanded="true"]) {
@@ -18012,6 +18028,7 @@ body {
 	margin: 1rem;
 	margin-bottom: 0;
 	max-height: 60px;
+	width: 83vw;
 }
 .sidebar.sidebar-boxed + .main-content .footer {
 	border-radius: 0.5rem;
@@ -19297,6 +19314,102 @@ button.bg-soft-gray-dark:focus {
 .animate__backOutLeft {
 	animation-name: backOutLeft;
 }
+
+.menu-sticky-out {
+	animation-name: topbardown;
+	/* animation-duration: 1s; */
+	/* transition: all 1200ms; */
+	/* animation-duration: 2s; */
+}
+@keyframes topbardown {
+	0% {
+		animation-timing-function: ease-in;
+		opacity: 0;
+		transform: translateX(250px);
+	}
+
+	/* from {
+		opacity: 0;
+		transform: translate3d(50%, -20%, 10%);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 2%, 0);
+	} */
+}
+
+.menu-sticky-out_new {
+	animation-name: topbardown_new 4s ease-in 4s 2 normal backwards;
+	/* animation-duration: 1s; */
+	/* transition: all 1200ms; */
+	/* animation-duration: 2s; */
+}
+@keyframes topbardown_new {
+	0% {
+		/* animation-timing-function: ease-in; */
+		opacity: 0.4;
+		/* transform: translateX(15%); */
+		transform: translatey(-20%);
+		/* width: calc(97% - 16.2rem); */
+	}
+
+	25% {
+		/* animation-timing-function: ease-out; */
+		opacity: 0.5;
+		/* transform: translateX(-10%); */
+		transform: translatey(-10%);
+	}
+
+	50% {
+		/* animation-timing-function: ease-in; */
+		/* transform: translateX(-5%); */
+		opacity: 0.6;
+		transform: translatey(-5%);
+		/* width: calc(99% - 16.2rem); */
+		/* width: calc(97%); */
+	}
+	75% {
+		/* animation-timing-function: ease-in; */
+		/* transform: translateX(-5%); */
+		/* transform: translatey(-5%); */
+		opacity: 0.8;
+		width: 100%;
+	}
+
+	100% {
+		/* animation-timing-function: ease-out; */
+		opacity: 1;
+		/* transform: translateX(0); */
+		transform: translatey(2%);
+	}
+
+	/* from {
+		opacity: 0;
+		transform: translate3d(50%, -20%, 10%);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 2%, 0);
+	} */
+}
+.menu-sticky-in {
+	animation-name: topbarup;
+	/* animation-duration: 2s; */
+	transition: all 1200ms;
+	/* animation-duration: 1s; */
+	/* width: calc(97% - 16.2rem); */
+}
+@keyframes topbarup {
+	from {
+		opacity: 0;
+		transform: translate3d(25%, 20%, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0%, 0);
+	}
+}
+
 @keyframes backOutRight {
 	0% {
 		transform: scale(1);
@@ -22694,4 +22807,10 @@ tr {
 
 .text-right {
 	text-align: right;
+}
+
+.navbar-nav .iq-main-menu > .nav-link .active {
+	-webkit-box-shadow: 5px 5px 15px -9px rgba(0, 0, 0, 0.74);
+	-moz-box-shadow: 5px 5px 15px -9px rgba(0, 0, 0, 0.74);
+	box-shadow: 5px 5px 15px -9px rgba(0, 0, 0, 0.74);
 }

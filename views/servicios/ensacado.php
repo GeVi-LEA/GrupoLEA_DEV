@@ -178,7 +178,7 @@ function ROFinaliza($estatus)
                                 <?php
                                     endforeach;
                                 endif;
-                                                                ?>
+                                                            ?>
                             </select>
                             <?php } ?>
                         </div>
@@ -236,7 +236,7 @@ function ROFinaliza($estatus)
                                 <?php
                                     endforeach;
                                 endif;
-                                                                ?>
+                                                            ?>
                             </select>
                             <?php } ?>
                         </div>
@@ -375,6 +375,7 @@ function ROFinaliza($estatus)
             <div class="div-datos mt-2">
                 <div class="d-flex justify-content-between mt-1">
                     <input type="hidden" value="<?= $serv['id'] ?>" id="idServicio" />
+                    <input type="hidden" value="<?= $serv['almacen_id'] ?>" id="almacen_id" css="almacen_id" name="almacen_id">
                     <div class="ml-2" <?php ROFinaliza($ensacado['estatus_id']) ?>><strong class="mr-1">Folio:</strong><span class="fixed item-medium folio"> <?= $serv['folio'] ?></span></div>
                     <div class="ml-2" <?php ROFinaliza($ensacado['estatus_id']) ?>><strong class="mr-1">Servicio:</strong><input type="hidden" id="idNombreServicio" value="<?= $serv['servicio_id'] ?> " /> <span
                             id="nombreServicio" class="fixed item-medium">
@@ -534,6 +535,7 @@ function ROFinaliza($estatus)
                     <form id="formAgregarServicio" method="POST" enctype="multipart/form-data">
                         <input type="hidden" id="idEntrada" name="idEntrada" />
                         <input type="hidden" id="estatus" name="estatus" value="1" />
+                        <input type="hidden" id="almacen_id" css="almacen_id" name="almacen_id">
                         <div class="container div-form">
                             <div class="row justify-content-between mb-3">
                                 <div class="d-flex">
@@ -619,6 +621,7 @@ function ROFinaliza($estatus)
                                     </div>
                                     <div>
                                         <strong class="mr-1">Producto:</strong>
+
                                         <select name="producto" class="item-medium" id="producto" style="">
                                             <option value="" selected>--Selecciona--</option>
                                             <option value="nuevo"> >>Nuevo Producto<< </option>

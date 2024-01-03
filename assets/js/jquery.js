@@ -1,5 +1,10 @@
 $(document).ready(function () {
-	const serv = "http://localhost/GrupoLEA/";
+	if (typeof __url__ !== "undefined" && __url__) {
+		// vriable is set and isnt falsish so it can be used;
+	} else {
+		__url__ = localStorage.getItem("_URL_");
+	}
+	const serv = __url__;
 
 	// if (typeof Scrollbar !== typeof null) {
 	// if (document.querySelectorAll(".data-scrollbar").length) {

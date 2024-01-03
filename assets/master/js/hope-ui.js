@@ -46,11 +46,14 @@ Index Of Script
 window.addEventListener("scroll", function () {
 	let yOffset = document.documentElement.scrollTop;
 	let navbar = document.querySelector(".navs-sticky");
+	// console.log("yOffset: ", yOffset);
 	if (navbar !== null) {
-		if (yOffset >= 200) {
-			navbar.classList.add("menu-sticky");
+		if (yOffset >= 100) {
+			navbar.classList.add("menu-sticky-in");
+			navbar.classList.remove("menu-sticky-out_new");
 		} else {
-			navbar.classList.remove("menu-sticky");
+			navbar.classList.remove("menu-sticky-in");
+			navbar.classList.add("menu-sticky-out_new");
 		}
 	}
 });
@@ -414,13 +417,13 @@ Array.from(sidebarToggleBtn, (sidebarBtn) => {
 Back To Top
 --------------------------*/
 const backToTop = document.getElementById("back-to-top");
-console.log(backToTop);
+// console.log(backToTop);
 if (backToTop !== null && backToTop !== undefined) {
 	document
 		.getElementById("back-to-top")
 		.classList.add("animate__animated", "animate__fadeOut");
 	window.addEventListener("scroll", (e) => {
-		if (document.documentElement.scrollTop > 200) {
+		if (document.documentElement.scrollTop > 150) {
 			document
 				.getElementById("back-to-top")
 				.classList.remove("animate__fadeOut");

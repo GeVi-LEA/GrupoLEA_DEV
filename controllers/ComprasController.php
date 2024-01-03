@@ -274,12 +274,16 @@ class comprasController
                 header('Location:' . principalUrl . '?controller=Compras&action=index');
             } else {
                 $requisicion->setId($id);
-
                 $saveReq = $requisicion->edit();
+                // print_r('<pre>');
+                // print_r($requisicion);
+                // print_r('</pre>');
+                // die ();
+
                 if ($saveReq && ($estatus == 5)) {
                     $save = $this->actualizarOrdenCompra($id);
                 }
-                // header('Location:' . principalUrl . '?controller=Compras&action=requisicionpop&id=' . $id);
+                header('Location:' . principalUrl . '?controller=Compras&action=requisicionpop&id=' . $id);
             }
         }
     }

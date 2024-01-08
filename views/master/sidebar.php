@@ -80,7 +80,7 @@
                     <!-- end Compras Menu -->
                     <!-- start Laboratorio Menu -->
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="#sidebarLaboratorio" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLaboratorio">
+                        <a class="nav-link menu-link disabled" href="#sidebarLaboratorio" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLaboratorio">
                             <i class="fa-solid fa-droplet fa-xl"></i>
                             <span class="item-name">Laboratorio</span>
                             <!-- <i class="right-icon">
@@ -103,7 +103,7 @@
                     <!-- end Laboratorio Menu -->
                     <!-- start Produccion Menu -->
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="#sidebarProduccion" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProduccion">
+                        <a class="nav-link menu-link disabled" href="#sidebarProduccion" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProduccion">
                             <i class="fa-solid fa-diagram-project fa-xl"></i>
                             <span class="item-name">Producción</span>
                             <!-- <i class="right-icon">
@@ -209,7 +209,7 @@
                                     <span class="item-name">Almacenaje</span>
                                 </a>
                             </li>
-                            <li class=" nav-item ">
+                            <li class=" nav-item " hidden>
                                 <a class="nav-link <?php activeRoute(principalUrl . '?controller=Servicios&action=monitorEntradas', 'Monitor Entradas') ?>"
                                     href="<?= principalUrl ?>?controller=Servicios&action=monitorEntradas">
                                     <i class="icon">

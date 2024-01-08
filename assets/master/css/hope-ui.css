@@ -17663,7 +17663,7 @@ body.offcanvas-active {
 	color: var(--bs-gray-900);
 }
 .sidebar-base .nav-item .disabled {
-	color: var(--bs-gray-400);
+	color: var(--bs-gray-400) !important;
 	cursor: unset !important;
 }
 .sidebar-base .nav-item .nav-link {

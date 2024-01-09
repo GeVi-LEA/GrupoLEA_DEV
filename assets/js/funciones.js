@@ -446,17 +446,17 @@ if (window.history.replaceState) {
 // 	});
 // };
 
-// function goToByScroll(id) {
-// 	// Remove "link" from the ID
-// 	id = id.replace("link", "");
-// 	// Scroll
-// 	$("html,body").animate(
-// 		{
-// 			scrollTop: $("#" + id).offset().top - 80,
-// 		},
-// 		"slow"
-// 	);
-// }
+function goToByScroll(id) {
+	// Remove "link" from the ID
+	id = id.replace("link", "");
+	// Scroll
+	$("html,body").animate(
+		{
+			scrollTop: $("#" + id).offset().top - 80,
+		},
+		"slow"
+	);
+}
 
 // function getRandomColor() {
 // 	return "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");

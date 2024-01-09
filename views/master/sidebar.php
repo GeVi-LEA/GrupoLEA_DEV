@@ -209,7 +209,7 @@
                                     <span class="item-name">Almacenaje</span>
                                 </a>
                             </li>
-                            <li class=" nav-item " hidden>
+                            <li class=" nav-item ">
                                 <a class="nav-link <?php activeRoute(principalUrl . '?controller=Servicios&action=monitorEntradas', 'Monitor Entradas') ?>"
                                     href="<?= principalUrl ?>?controller=Servicios&action=monitorEntradas">
                                     <i class="icon">

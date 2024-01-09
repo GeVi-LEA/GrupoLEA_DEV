@@ -1,3 +1,5 @@
+var firmado = 0;
+
 $(document).ready(function () {
 	const serv =
 		typeof __url__ !== "undefined" && __url__
@@ -14,6 +16,17 @@ $(document).ready(function () {
 		radio.attr("hidden", false);
 		input.attr("value", "0");
 	});
+	if (firmado == 1) {
+		goToByScroll("firmas");
+		firmado = 0;
+	}
+	$(":radio").change(function () {
+		$("#btnFirma").submit().click();
+		firmado = 1;
+		setTimeout(() => {
+			goToByScroll("firmas");
+		}, 2000);
+	});
 
 	var estaturReq = $("#estatusReq").val();
 	if (estaturReq == 5) {
@@ -21,7 +34,9 @@ $(document).ready(function () {
 	}
 
 	$("#btnFirma").click(function (e) {
-		window.opener.location.reload();
+		try {
+			// window.opener.location.reload();
+		} catch (error) {}
 	});
 
 	$("#edit").click(function () {
@@ -727,3 +742,15 @@ $(document).ready(function () {
 		);
 	});
 });
+
+function goToByScroll(id) {
+	// Remove "link" from the ID
+	id = id.replace("link", "");
+	// Scroll
+	$("html,body").animate(
+		{
+			scrollTop: $("#" + id).offset().top - 80,
+		},
+		"slow"
+	);
+}

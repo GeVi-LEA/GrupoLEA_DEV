@@ -1,7 +1,7 @@
 <?php
 
-class Usuario {
-
+class Usuario
+{
     private $id;
     private $permiso;
     private $departamento;
@@ -21,153 +21,188 @@ class Usuario {
     private $activo;
     private $db;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = Database::connect();
     }
 
-    function getId() {
+    function getId()
+    {
         return $this->id;
     }
 
-    function getPermiso() {
+    function getPermiso()
+    {
         return $this->permiso;
     }
 
-    function getDepartamento() {
+    function getDepartamento()
+    {
         return $this->departamento;
     }
 
-    function getPuesto() {
+    function getPuesto()
+    {
         return $this->puesto;
     }
 
-    function getNombres() {
+    function getNombres()
+    {
         return $this->nombres;
     }
 
-    function getApellidos() {
+    function getApellidos()
+    {
         return $this->apellidos;
     }
 
-    function getCorreo() {
+    function getCorreo()
+    {
         return $this->correo;
     }
 
-    function getExtension() {
+    function getExtension()
+    {
         return $this->extension;
     }
 
-    function getTelefono() {
+    function getTelefono()
+    {
         return $this->telefono;
     }
 
-    function getUser() {
+    function getUser()
+    {
         return $this->user;
     }
 
-    function getPassword() {
-          return password_hash($this->db->real_escape_string($this->password), PASSWORD_BCRYPT, ['cost' => 4]);
+    function getPassword()
+    {
+        return password_hash($this->db->real_escape_string($this->password), PASSWORD_BCRYPT, ['cost' => 4]);
     }
 
-    function getFechaAlta() {
+    function getFechaAlta()
+    {
         return $this->fechaAlta;
     }
 
-    function getFechaModificacion() {
+    function getFechaModificacion()
+    {
         return $this->fechaModificacion;
     }
 
-    function getFechaBaja() {
+    function getFechaBaja()
+    {
         return $this->fechaBaja;
     }
 
-    function getImagen() {
+    function getImagen()
+    {
         return $this->imagen;
     }
 
-    function getFirma() {
+    function getFirma()
+    {
         return $this->firma;
     }
 
-    function getActivo() {
+    function getActivo()
+    {
         return $this->activo;
     }
 
-    function setId($id): void {
+    function setId($id): void
+    {
         $this->id = $id;
     }
 
-    function setPermiso($permiso): void {
+    function setPermiso($permiso): void
+    {
         $this->permiso = $permiso;
     }
 
-    function setDepartamento($departamento): void {
+    function setDepartamento($departamento): void
+    {
         $this->departamento = $departamento;
     }
 
-    function setPuesto($puesto): void {
+    function setPuesto($puesto): void
+    {
         $this->puesto = $this->db->real_escape_string(UtilsHelp::fixString($puesto));;
     }
 
-    function setNombres($nombres): void {
-         $this->nombres = $this->db->real_escape_string(UtilsHelp::capitalizeString(trim($nombres)));
+    function setNombres($nombres): void
+    {
+        $this->nombres = $this->db->real_escape_string(UtilsHelp::capitalizeString(trim($nombres)));
     }
 
-    function setApellidos($apellidos): void {
-       $this->apellidos = $this->db->real_escape_string(UtilsHelp::capitalizeString(trim($apellidos)));
+    function setApellidos($apellidos): void
+    {
+        $this->apellidos = $this->db->real_escape_string(UtilsHelp::capitalizeString(trim($apellidos)));
     }
 
-    function setCorreo($correo): void {
+    function setCorreo($correo): void
+    {
         $this->correo = $this->db->real_escape_string(strtolower(trim($correo)));
     }
 
-    function setExtension($extension): void {
+    function setExtension($extension): void
+    {
         $this->extension = $extension;
     }
 
-    function setTelefono($telefono): void {
+    function setTelefono($telefono): void
+    {
         $this->telefono = $telefono;
     }
 
-    function setUser($user): void {
-            $this->user = $this->db->real_escape_string(strtolower(trim($user)));
+    function setUser($user): void
+    {
+        $this->user = $this->db->real_escape_string(strtolower(trim($user)));
     }
 
-    function setPassword($password): void {
+    function setPassword($password): void
+    {
         $this->password = $password;
     }
 
-    function setFechaAlta($fechaAlta): void {
+    function setFechaAlta($fechaAlta): void
+    {
         $this->fechaAlta = $fechaAlta;
     }
 
-    function setFechaModificacion($fechaModificacion): void {
+    function setFechaModificacion($fechaModificacion): void
+    {
         $this->fechaModificacion = $fechaModificacion;
     }
 
-    function setFechaBaja($fechaBaja): void {
+    function setFechaBaja($fechaBaja): void
+    {
         $this->fechaBaja = $fechaBaja;
     }
 
-    function setImagen($imagen): void {
+    function setImagen($imagen): void
+    {
         $this->imagen = $imagen;
     }
 
-    function setFirma($firma): void {
+    function setFirma($firma): void
+    {
         $this->firma = $firma;
     }
 
-    function setActivo($activo): void {
+    function setActivo($activo): void
+    {
         $this->activo = $activo;
     }
 
-    public function save() {
-
+    public function save()
+    {
         $sql = "insert into catalogo_usuarios values(null, '{$this->getPermiso()}', {$this->getDepartamento()}, '{$this->getPuesto()}', '{$this->getNombres()}', '{$this->getApellidos()}', "
-                . "'{$this->getCorreo()}', '{$this->getExtension()}', '{$this->getTelefono()}', '{$this->getUser()}', '{$this->getPassword()}', '{$this->getFechaAlta()}', null, "
-                . "null, '{$this->getImagen()}', '{$this->getFirma()}','{$this->getActivo()}');";
+            . "'{$this->getCorreo()}', '{$this->getExtension()}', '{$this->getTelefono()}', '{$this->getUser()}', '{$this->getPassword()}', '{$this->getFechaAlta()}', null, "
+            . "null, '{$this->getImagen()}', '{$this->getFirma()}','{$this->getActivo()}');";
 
-        $save = $this->db->query($sql);
+        $save   = $this->db->query($sql);
         $result = false;
         if ($save) {
             $result = true;
@@ -176,12 +211,12 @@ class Usuario {
         return $result;
     }
 
-    public function edit($cambioPass) {
-  
+    public function edit($cambioPass)
+    {
         $sql = "update catalogo_usuarios set permisos = '{$this->getPermiso()}', departamento_id = {$this->getDepartamento()}, puesto= '{$this->getPuesto()}', "
-                . "nombres = '{$this->getNombres()}', apellidos = '{$this->getApellidos()}', correo = '{$this->getCorreo()}', "
-                . "telefono = '{$this->getTelefono()}', extension= '{$this->getExtension()}', user= '{$this->getUser()}', "
-                . "fecha_alta='{$this->getFechaAlta()}', fecha_modificacion = curdate() ";
+            . "nombres = '{$this->getNombres()}', apellidos = '{$this->getApellidos()}', correo = '{$this->getCorreo()}', "
+            . "telefono = '{$this->getTelefono()}', extension= '{$this->getExtension()}', user= '{$this->getUser()}', "
+            . "fecha_alta='{$this->getFechaAlta()}', fecha_modificacion = curdate() ";
         if ($this->getActivo() == 'N') {
             $sql = $sql . ", fecha_baja = curdate(), activo= '{$this->getActivo()}' ";
         } else {
@@ -193,12 +228,12 @@ class Usuario {
         if ($this->getFirma() != null) {
             $sql = $sql . ", firma= '{$this->getFirma()}' ";
         }
-        if($cambioPass){
-        $sql = $sql .", password= '{$this->getPassword()}' ";
-    }
+        if ($cambioPass) {
+            $sql = $sql . ", password= '{$this->getPassword()}' ";
+        }
         $sql = $sql . "where id = {$this->getId()};";
 
-        $save = $this->db->query($sql);
+        $save   = $this->db->query($sql);
         $result = false;
         if ($save) {
             $result = true;
@@ -206,10 +241,11 @@ class Usuario {
         return $result;
     }
 
-    public function getAll() {
+    public function getAll()
+    {
         $result = array();
         $sql = "SELECT u.*, concat(u.nombres,' ', u.apellidos) as nombreCompleto, d.nombre as departamento FROM catalogo_usuarios as u "
-                . "inner join catalogo_departamentos d on d.id = u.departamento_id order by u.nombres asc";
+            . 'inner join catalogo_departamentos d on d.id = u.departamento_id order by u.nombres asc';
         $usuarios = $this->db->query($sql);
         while ($u = $usuarios->fetch_object()) {
             array_push($result, $u);
@@ -217,7 +253,8 @@ class Usuario {
         return $result;
     }
 
-    public function delete() {
+    public function delete()
+    {
         $delete = $this->db->query("delete from catalogo_usuarios where id={$this->id}");
         $result = false;
         if ($delete) {
@@ -226,54 +263,65 @@ class Usuario {
         return $result;
     }
 
-    public function getById($id) {
-        $usuario = $this->db->query("SELECT u.*, d.nombre as departamento FROM catalogo_usuarios u "
-                . "inner join catalogo_departamentos d on d.id = u.departamento_id  where u.id='{$id}'");
+    public function getById($id)
+    {
+        $usuario = $this->db->query("
+                    SELECT u.*
+                    , d.nombre as departamento 
+                    ,concat(u.nombres,' ',u.apellidos) as nombrecompleto 
+                     FROM catalogo_usuarios u 
+                     inner join catalogo_departamentos d on d.id = u.departamento_id  
+                     where u.id='{$id}'");
         return $usuario->fetch_object();
     }
-    
-        public function getUsuariosByDepartamento($idDepartamento) {
-        $result = array();
-        $usuario = $this->db->query("SELECT u.*, d.nombre as departamento FROM catalogo_usuarios u "
-                . "inner join catalogo_departamentos d on d.id = u.departamento_id where d.id='{$idDepartamento}' and u.activo='S'");
-         while ($u = $usuario->fetch_object()) {
+
+    public function getUsuariosByDepartamento($idDepartamento)
+    {
+        $result  = array();
+        $usuario = $this->db->query('SELECT u.*, d.nombre as departamento FROM catalogo_usuarios u '
+                                        . "inner join catalogo_departamentos d on d.id = u.departamento_id where d.id='{$idDepartamento}' and u.activo='S'");
+        while ($u = $usuario->fetch_object()) {
             array_push($result, $u);
         }
         return $result;
     }
-    
-    public function getByUser($user) {
-     $usuario = $this->db->query("select * from catalogo_usuarios where user='{$user}'");
-     return $usuario;
+
+    public function getByUser($user)
+    {
+        $usuario = $this->db->query("select * from catalogo_usuarios where user='{$user}'");
+        return $usuario;
     }
-    
-    public function updatePass(){
+
+    public function updatePass()
+    {
         $result = false;
-        $sql = "update catalogo_usuarios set password= '{$this->getPassword()}' where user='{$this->getUser()}';";
+        $sql    = "update catalogo_usuarios set password= '{$this->getPassword()}' where user='{$this->getUser()}';";
         $update = $this->db->query($sql);
-        
-        if($update){
-            $result = true;   
+
+        if ($update) {
+            $result = true;
         }
         return $result;
     }
-    
-    public function eliminarImagen($id) {
+
+    public function eliminarImagen($id)
+    {
         $sql = "update catalogo_usuarios set fecha_modificacion = curdate(), imagen = '' where id={$id}";
 
-        $save = $this->db->query($sql);
+        $save   = $this->db->query($sql);
         $result = false;
         if ($save) {
             $result = 'Se elimino imagen';
         }
         return $result;
     }
-    
-    public function eliminarFirma($id) {
-    $sql = "update catalogo_usuarios set fecha_modificacion = curdate(), firma = '' where id={$id}";
 
-    $save = $this->db->query($sql);
-    $result = false;
+    public function eliminarFirma($id)
+    {
+        $sql = "update catalogo_usuarios set fecha_modificacion = curdate(), firma = '' where id={$id}";
+
+        $save   = $this->db->query($sql);
+        $result = false;
         if ($save) {
             $result = 'Se elimino firma';
         }

@@ -86,6 +86,7 @@
             <th>Id</th>
             <th>Nombre</th>
             <th>Clave</th>
+            <th hidden>ciudadIdTabla</th>
             <th>Ciudad</th>
             <th></th>
             </thead>

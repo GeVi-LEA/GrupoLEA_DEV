@@ -137,12 +137,12 @@
                     <div class="firma">
                         <?php if (isset($firmas) && $firmas['firma1'] == 0): ?>
                         <div>
-                            <input type="radio" name="firmas" value="1" /> <label for="firmas">Agregar firma</label>
+                            <input type="radio" name="firmas" value="1" id="firmas1" /> <label for="firmas1">Agregar firma</label>
                             <input type="hidden" name="firma1" value="0" />
                         </div>
                         <?php else: ?>
                         <div hidden id="radioFirma" class="img-firma">
-                            <input type="radio" name="firmas" value="1" /> <label for="firmas">Agregar firma</label>
+                            <input type="radio" name="firmas" value="1" id="firmas1" /> <label for="firmas1">Agregar firma</label>
                             <input type="hidden" name="firma1" value="0" />
                         </div>
                         <span class="material-icons i-clear icons" id="clear" title='Eliminar firma'>clear</span>
@@ -158,12 +158,12 @@
                     <div class="firma">
                         <?php if (isset($firmas) && $firmas['firma2'] == 0 && Utils::isFirmas()): ?>
                         <div>
-                            <input type="radio" name="firmas" value="2" /> <label for="firmas">Agregar firma</label>
+                            <input type="radio" name="firmas" value="2" id="firmas2" /> <label for="firmas2">Agregar firma</label>
                             <input type="hidden" name="firma2" value="0" />
                         </div>
                         <?php else: ?>
                         <div hidden id="radioFirma" class="img-firma">
-                            <input type="radio" name="firmas" value="2" /> <label for="firmas">Agregar firma</label>
+                            <input type="radio" name="firmas" value="2" id="firmas2" /> <label for="firmas2">Agregar firma</label>
                             <input type="hidden" name="firma2" value="0" />
                         </div>
                         <?php if (Utils::isFirmas()): ?>

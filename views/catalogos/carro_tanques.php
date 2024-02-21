@@ -75,13 +75,11 @@
     </form>
 </section>
 <section class="sec-tabla text-center table-responsive-sm" id="seccionCarroTanque">
-    <table class="table table-condensed hover" id="tablaCarroTanque">
+    <table class="table table-condensed" id="tablaCarroTanque">
         <?php if (!empty($carros)): ?>
             <thead>
-            <th hidden>id</th>
             <th>Número</th>
             <th>Estatus</th>
-            <th hidden>idEstatus</th>
             <th></th>
             </thead>
             <tbody>

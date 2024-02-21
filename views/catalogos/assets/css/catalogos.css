@@ -404,24 +404,15 @@ select:focus,
 
 .sec-tabla{
     overflow-y: scroll;
-    height: 650px;
+    height:520px;
     margin: 0 auto;
     margin-top: 15px;
-    width: 90%;
+    width: 85%;
     transition: 1s;
 }
 
 .sec-tabla table .tr{
     transition: .5s ease-out;
-}
-
-.sec-tabla table thead th{
-    text-align: center !important;
-}
-
-.sec-tabla table th:last-child{
-   color: transparent !important;
-   cursor: default  !important;
 }
 
 .sec-tabla table .tr:hover{

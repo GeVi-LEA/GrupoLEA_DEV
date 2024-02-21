@@ -28,8 +28,6 @@ if (isset($_GET['ajax'])) {
         <link rel="stylesheet" href="../../assets/css/jquery-ui/jquery-ui.min.css">
         <script src="../../assets/js/jquery-ui.min.js"></script>
         <script src="assets/js/funcionesCatalogo.js"></script> 
-        <link rel="stylesheet" href="../../assets/libs/datatables/datatables.min.css">
-
     
     </head>
     <body>
@@ -39,7 +37,6 @@ if (isset($_GET['ajax'])) {
             ?>
         </div>
     </body>
-    <script src="../../assets/libs/datatables/datatables.js"></script> 
     <script src="../../assets/js/bootstrap/bootstrap.min.js"></script> 
     <script src="../../assets/js/popper.min.js"></script>
     <script src="assets/js/funcionesJSCatalogo.js"></script> 

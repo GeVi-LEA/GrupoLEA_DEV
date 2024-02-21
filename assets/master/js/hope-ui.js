@@ -71,9 +71,7 @@ $(document).ready(function () {
               Popover
 -----------------------------------------------------------------------*/
 
-var popoverTriggerList = [].slice.call(
-	document.querySelectorAll('[data-bs-toggle="popover"]')
-);
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
 if (typeof bootstrap !== typeof undefined) {
 	var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
 		return new bootstrap.Popover(popoverTriggerEl);
@@ -85,16 +83,12 @@ if (typeof bootstrap !== typeof undefined) {
 -----------------------------------------------------------------------*/
 
 if (typeof bootstrap !== typeof undefined) {
-	var tooltipTriggerList = [].slice.call(
-		document.querySelectorAll('[data-bs-toggle="tooltip"]')
-	);
+	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
 	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 		return new bootstrap.Tooltip(tooltipTriggerEl);
 	});
 
-	var tooltipTriggerList = [].slice.call(
-		document.querySelectorAll('[data-sidebar-toggle="tooltip"]')
-	);
+	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-sidebar-toggle="tooltip"]'));
 	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 		return new bootstrap.Tooltip(tooltipTriggerEl);
 	});
@@ -142,9 +136,7 @@ const progressBarInit = (elem) => {
 	}
 };
 
-const customProgressBar = document.querySelectorAll(
-	'[data-toggle="progress-bar"]'
-);
+const customProgressBar = document.querySelectorAll('[data-toggle="progress-bar"]');
 Array.from(customProgressBar, (elem) => {
 	progressBarInit(elem);
 });
@@ -298,13 +290,8 @@ if (tableTh !== null) {
 			elem.children[0].classList.add("active");
 			Array.from(tableTd, (td) => td.classList.remove("active"));
 
-			const col = Array.prototype.indexOf.call(
-				document.querySelector("#my-table tr").children,
-				elem
-			);
-			const tdIcons = document.querySelectorAll(
-				"#my-table tr td:nth-child(" + parseInt(col + 1) + ")"
-			);
+			const col = Array.prototype.indexOf.call(document.querySelector("#my-table tr").children, elem);
+			const tdIcons = document.querySelectorAll("#my-table tr td:nth-child(" + parseInt(col + 1) + ")");
 			Array.from(tdIcons, (td) => td.classList.add("active"));
 		});
 	});
@@ -337,11 +324,7 @@ const resizePlugins = () => {
 	const sidebarResponsive = document.querySelector(".sidebar-default");
 	if (window.innerWidth < 1025) {
 		Array.from(tabs, (elem) => {
-			if (
-				!elem.classList.contains("flex-column") &&
-				elem.classList.contains("nav-tabs") &&
-				elem.classList.contains("nav-pills")
-			) {
+			if (!elem.classList.contains("flex-column") && elem.classList.contains("nav-tabs") && elem.classList.contains("nav-pills")) {
 				elem.classList.add("flex-column", "on-resize");
 			}
 		});
@@ -357,10 +340,7 @@ const resizePlugins = () => {
 			}
 		});
 		if (sidebarResponsive !== null) {
-			if (
-				sidebarResponsive.classList.contains("sidebar-mini") &&
-				sidebarResponsive.classList.contains("on-resize")
-			) {
+			if (sidebarResponsive.classList.contains("sidebar-mini") && sidebarResponsive.classList.contains("on-resize")) {
 				sidebarResponsive.classList.remove("sidebar-mini", "on-resize");
 			}
 		}
@@ -419,24 +399,14 @@ Back To Top
 const backToTop = document.getElementById("back-to-top");
 // console.log(backToTop);
 if (backToTop !== null && backToTop !== undefined) {
-	document
-		.getElementById("back-to-top")
-		.classList.add("animate__animated", "animate__fadeOut");
+	document.getElementById("back-to-top").classList.add("animate__animated", "animate__fadeOut");
 	window.addEventListener("scroll", (e) => {
 		if (document.documentElement.scrollTop > 150) {
-			document
-				.getElementById("back-to-top")
-				.classList.remove("animate__fadeOut");
-			document
-				.getElementById("back-to-top")
-				.classList.add("animate__fadeIn");
+			document.getElementById("back-to-top").classList.remove("animate__fadeOut");
+			document.getElementById("back-to-top").classList.add("animate__fadeIn");
 		} else {
-			document
-				.getElementById("back-to-top")
-				.classList.remove("animate__fadeIn");
-			document
-				.getElementById("back-to-top")
-				.classList.add("animate__fadeOut");
+			document.getElementById("back-to-top").classList.remove("animate__fadeIn");
+			document.getElementById("back-to-top").classList.add("animate__fadeOut");
 		}
 	});
 	// scroll body to 0px on click
@@ -510,19 +480,15 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 	if (document.querySelector(".screen-darken")) {
-		document
-			.querySelector(".screen-darken")
-			.addEventListener("click", function (event) {
-				close_offcanvas();
-			});
+		document.querySelector(".screen-darken").addEventListener("click", function (event) {
+			close_offcanvas();
+		});
 	}
 });
 if (document.querySelector("#navbarSideCollapse")) {
-	document
-		.querySelector("#navbarSideCollapse")
-		.addEventListener("click", function () {
-			document.querySelector(".offcanvas-collapse").classList.toggle("open");
-		});
+	document.querySelector("#navbarSideCollapse").addEventListener("click", function () {
+		document.querySelector(".offcanvas-collapse").classList.toggle("open");
+	});
 }
 
 /*---------------------------------------------------------------------
@@ -669,11 +635,7 @@ const getRandomColor = () => {
 
 function fechaHora($fecha) {
 	if ($fecha != null || $fecha != "") {
-		return (
-			date("d/m/Y", strtotime($fecha)) +
-			" - " +
-			date("H:i:s", strtotime($fecha))
-		);
+		return date("d/m/Y", strtotime($fecha)) + " - " + date("H:i:s", strtotime($fecha));
 	} else {
 		return "";
 	}
@@ -681,17 +643,9 @@ function fechaHora($fecha) {
 
 function formatDate(date) {
 	return (
-		[
-			date.getFullYear(),
-			padTo2Digits(date.getMonth() + 1),
-			padTo2Digits(date.getDate()),
-		].join("-") +
+		[date.getFullYear(), padTo2Digits(date.getMonth() + 1), padTo2Digits(date.getDate())].join("-") +
 		" " +
-		[
-			padTo2Digits(date.getHours()),
-			padTo2Digits(date.getMinutes()),
-			padTo2Digits(date.getSeconds()),
-		].join(":")
+		[padTo2Digits(date.getHours()), padTo2Digits(date.getMinutes()), padTo2Digits(date.getSeconds())].join(":")
 	);
 }
 
@@ -699,14 +653,8 @@ function padTo2Digits(num) {
 	return num.toString().padStart(2, "0");
 }
 
-function erpalert(
-	tipo = "",
-	title = "Hecho!",
-	texto = "",
-	time = "4500",
-	show = "slideDown",
-	hide = "slideUp"
-) {
+function erpalert(tipo = "", title = "Hecho!", texto = "", time = "4500", show = "slideDown", hide = "slideUp") {
+	console.log("por hope.js");
 	if (tipo == "") {
 		tipo = "success";
 	}
@@ -725,8 +673,8 @@ function erpalert(
 		extendedTimeOut: "1000",
 		showEasing: "swing",
 		hideEasing: "linear",
-		showMethod: "fadeIn",
-		hideMethod: "fadeOut",
+		showMethod: "slideDown", //"fadeIn",
+		hideMethod: "slideUp", //"fadeOut",
 	};
 	toastr[tipo](texto, title);
 	// toastr[tipo](texto);

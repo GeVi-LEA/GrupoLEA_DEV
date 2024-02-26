@@ -41,7 +41,7 @@ $(document).ready(function () {
 			? null
 			: $("#clave").val(trDatos.find("#claveTabla").html());
 
-		$("#cap_maxima") == undefined
+	/**	$("#cap_maxima") == undefined
 			? null
 			: $("#cap_maxima").val(
 					trDatos
@@ -49,7 +49,7 @@ $(document).ready(function () {
 						.html()
 						.replace(",", "")
 						.replace(" KGs/LTs", "")
-			  );
+			  );   */
 		$("#descripcion") == undefined
 			? null
 			: $("#descripcion").val(trDatos.find("#descripcionTabla").html());

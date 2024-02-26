@@ -19,7 +19,7 @@
     <form action="<?= catalogosUrl ?>?controller=Catalogo&action=saveTransportistaCliente" method="post" class="formulario" id="formularioTransportistasClientes" >
         <div class="divCancelar">
             <a id="cancel"> <span class="material-icons i-cancel ml-5" title="Cancelar">disabled_by_default</span></a>    
-        </div>  
+        </div>
         <input type="text" name="id" class="id" id="id" hidden/>
         <div class="row p-1">
             <div class="col-3 text-right">
@@ -34,7 +34,7 @@
                 <label for="clave">Comentarios:</label>
             </div>
             <div class="col-9">
-                <input type="text" name="clave" class="inputSmall" id="clave" maxlength="15" placeholder="Ej. Pipa"/>
+                <input type="text" name="clave" class="inputLarge" id="clave" maxlength="15" placeholder="Ej. Pipa"/>
             </div>
         </div>
         <div class="row p-1">
@@ -77,7 +77,7 @@
                         <td>
                             <div>
                                 <a ><span id="edit" class="material-icons i-edit" title="Editar">edit</span></a>                    
-                                <a id="linkDelete" href="<?= catalogosUrl ?>?controller=Catalogo&action=deleteTranspórtistaCliente&id=<?= $t->id; ?>" ></a><span id="delete" class="material-icons i-delete" title="Eliminar">delete_forever</span>
+                                <a id="linkDelete" href="<?= catalogosUrl ?>?controller=Catalogo&action=deleteTransportistaCliente&id=<?= $t->id; ?>" ></a><span id="delete" class="material-icons i-delete" title="Eliminar">delete_forever</span>
                             </div>
                         </td>
                     <?php endforeach; ?>

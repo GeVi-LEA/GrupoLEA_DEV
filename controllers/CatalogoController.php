@@ -2108,6 +2108,18 @@ class catalogoController
         require '../../views/catalogos/transportistas_clientes.php';
     }
 
+            public function deleteTransportistaCliente()
+    {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+
+           $trans= new TransportistasClientes();
+            $trans->setId($id);
+            $trans->delete();
+        }
+        header('Location:' . catalogosUrl . '?controller=Catalogo&action=showTransportistasClientes');
+    }
+
     public function saveChoferTransportistaClientes()
     {
         Utils::deleteSession('result');
@@ -2155,6 +2167,7 @@ class catalogoController
         $choferes = $chofer->getAll();
         require '../../views/catalogos/choferes_transportistas_clientes.php';
     }
+
 
     public function saveChoferTransportistaCliente()
     {

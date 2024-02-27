@@ -173,7 +173,7 @@ class Ciudad
                     '{$this->getRFC()}}',
                     '{$this->getTel()}}',
                     '{$this->getFolio()}}',
-                    {$_SESSION['usuario']->id});
+                    {$_SESSION['usuario']}->id);
                     ";
         $save   = $this->db->query($sql);
         $result = false;

@@ -13,6 +13,7 @@
     </div>
 </header>
 <nav class="menu">
+    <span> <a href="<?= catalogosUrl ?>?controller=Catalogo&action=showChoferesTransportistas">Choferes</span></a>
     <span id="mostrarForm">Agregar Transportista</span>
 </nav>
 <section id="secForm">
@@ -31,10 +32,10 @@
         </div>
         <div class="row p-1 ">
             <div class="col-3 text-right">
-                <label for="clave">Comentarios:</label>
+                <label for="descripcion">Comentarios:</label>
             </div>
             <div class="col-9">
-                <input type="text" name="clave" class="inputLarge" id="clave" maxlength="15" placeholder="Ej. Pipa"/>
+                <input type="text" name="descripcion" class="inputLarge" id="descripcion"  placeholder="Ej. Pipa"/>
             </div>
         </div>
         <div class="row p-1">
@@ -73,7 +74,7 @@
                     <tr class="tr">
                         <td id="idTabla"><?=$t->id; ?></td>
                         <td id="nombreTabla"><?= $t->nombre; ?></td>
-                        <td id="comentariosTabla"><?= $t->comentarios; ?></td>
+                        <td id="descripcionTabla"><?= $t->comentarios; ?></td>
                         <td>
                             <div>
                                 <a ><span id="edit" class="material-icons i-edit" title="Editar">edit</span></a>                    

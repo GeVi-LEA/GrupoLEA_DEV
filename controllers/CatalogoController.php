@@ -2120,22 +2120,22 @@ class catalogoController
         header('Location:' . catalogosUrl . '?controller=Catalogo&action=showTransportistasClientes');
     }
 
-    public function saveChoferTransportistaClientes()
+    public function saveTransportistaCliente()
     {
         Utils::deleteSession('result');
         Utils::deleteSession('errores');
 
         if (isset($_POST['nombre']) && $_POST['nombre'] != '') {
-            $servicio = new Servicio();
-            $servicio->setNombre($_POST['nombre']);
-            $servicio->setDescripcion($_POST['descripcion']);
-            $servicio->setClave($_POST['clave']);
+            $trans = new TransportistasClientes();
+            $trans->setNombre($_POST['nombre']);
+            $trans->setComentarios($_POST['descripcion']);
+
 
             if ($_POST['id'] != null || $_POST['id'] != '') {
-                $servicio->setId($_POST['id']);
-                $save = $servicio->edit();
+                $trans->setId($_POST['id']);
+                $save = $trans->edit();
             } else {
-                $save = $servicio->save();
+                $save = $trans->save();
             }
 
             if ($save) {
@@ -2143,29 +2143,17 @@ class catalogoController
             } else {
                 $_SESSION['result'] = 'false';
             }
-            header('Location:' . catalogosUrl . '?controller=Catalogo&action=showServicios');
+            header('Location:' . catalogosUrl . '?controller=Catalogo&action=showTransportistasClientes');
         } else {
-            header('Location:' . catalogosUrl . '?controller=Catalogo&action=showServicios');
+            header('Location:' . catalogosUrl . '?controller=Catalogo&action=showTransportistasClientes');
         }
     }
 
-    public function deleteChoferTransportistaClientes()
-    {
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
-
-            $servicio = new Servicio();
-            $servicio->setId($id);
-            $servicio->delete();
-        }
-        header('Location:' . catalogosUrl . '?controller=Catalogo&action=showServicios');
-    }
-    
-     public function showChoferesTransportistasClientes()
+     public function showChoferesTransportistas()
     {
         $chofer = new ChoferTransportistaCliente();
         $choferes = $chofer->getAll();
-        require '../../views/catalogos/choferes_transportistas_clientes.php';
+        require '../../views/catalogos/choferes_transportistas.php';
     }
 
 
@@ -2198,7 +2186,7 @@ class catalogoController
         }
     }
 
-    public function deleteChoferTransportistaCliente()
+        public function deleteChoferTransportistaClientes()
     {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
@@ -2209,4 +2197,6 @@ class catalogoController
         }
         header('Location:' . catalogosUrl . '?controller=Catalogo&action=showServicios');
     }
+    
+
 }

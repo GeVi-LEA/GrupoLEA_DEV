@@ -74,7 +74,7 @@ class TransportistasClientes
 
     public function edit()
     {
-        $sql    = "update catalogo_transportistas_clientes set 
+        $sql = "update catalogo_transportistas_clientes set 
         nombre = '{$this->getNombre()}' 
         , comentarios= '{$this->getComentarios()}'
          where id={$this->getId()}";

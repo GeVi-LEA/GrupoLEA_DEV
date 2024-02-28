@@ -942,7 +942,7 @@ function ROFinaliza($estatus)
                             <div class='col-md-2 col-12'>
                                 <label for="cantidad" class="form-label">Cantidad</label>
                                 <div class="input-group mb-3">
-                                    <input type="text" name="cantidad" id="cantidad" class="form-control numhtml" disabled />
+                                    <input type="text" name="cantidad" id="cantidad" class="form-control numhtml" />
                                     <span class="input-group-text">kgs.</span>
                                 </div>
 

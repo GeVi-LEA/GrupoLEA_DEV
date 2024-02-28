@@ -12,7 +12,8 @@ require_once models_root . 'catalogos/unidad.php';
 require_once models_root . 'catalogos/documento_norma.php';
 require_once models_root . 'catalogos/transportista_cliente.php';
 // require_once models_root . 'catalogos/chofer.php';
-require_once models_root . 'catalogos/chofer_transportista_cliente.php';
+require_once models_root . 'catalogos/chofer_transportista.php';
+// require_once models_root . 'catalogos/chofer_transportista_cliente.php';
 require_once models_root . 'servicios/servicio_cliente.php';
 require_once models_root . 'servicios/bascula.php';
 require_once models_root . 'servicios/servicio_entrada.php';
@@ -153,7 +154,7 @@ class serviciosController
         $catTransportes     = new TransportistasClientes();
         $cat_transportistas = $catTransportes->getAll();
 
-        $catChoferes  = new ChoferTransportistaCliente();
+        $catChoferes  = new ChoferTransportista();
         $cat_choferes = $catChoferes->getAll();
         require_once views_root . 'servicios/ensacado.php';
     }
@@ -1133,7 +1134,7 @@ class serviciosController
     public function getChoferesByTransporte()
     {
         if (isset($_POST['transp_id']) && $_POST['transp_id'] != '') {
-            $s         = new CatChoferes();
+            $s         = new ChoferTransportista();
             $transp_id = $_POST['transp_id'];
             $choferes  = $s->getChoferesByTransporte($transp_id);
             echo json_encode(['mensaje' => 'OK', 'choferes' => $choferes]);

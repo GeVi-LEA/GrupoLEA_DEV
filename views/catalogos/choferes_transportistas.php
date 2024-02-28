@@ -7,8 +7,8 @@
 <?php endif; ?>
 <header class="header">
     <div class="row">
-        <div class="col-3 pl-4 text-left"><a href="index.php"><span class="material-icons p-1 i-apps" id="i-apps" title="Catalogos">apps</span></a></div>
-        <div class="col-6 text-center"><h1 class="titulo">Choferes</h1></div>
+        <div class="col-1 text-center"><a href="<?= catalogosUrl ?>?controller=Catalogo&action=showTransportistasClientes"><span class="material-icons p-1 i-apps" id="i-apps" title="Transportistas">keyboard_backspace</span></a></div>
+        <div class="col-8 text-center"><h1 class="titulo">Choferes</h1></div>
         <div class="col-3 d-flex">
             <div class="mt-2 mr-3"><input class="buscador" type="text" id="buscador" placeholder="Buscar..."><i class="fas fa-search i-search"></i></div>
             <a><span class="material-icons ml-3 mt-1 p-1 i-close" id="i-close" title="Cerrar">cancel</span></a>
@@ -16,10 +16,10 @@
     </div>
 </header>
 <nav class="menu">
-    <span id="mostrarForm">Agregar cliente</span>
+    <span id="mostrarForm">Agregar chofer</span>
 </nav>
 <section id="secForm">
-    <form action="<?= catalogosUrl ?>?controller=Catalogo&action=saveCliente" method="post" class=" w-100 px-4 formulario" id="formularioCliente" >
+    <form action="<?= catalogosUrl ?>?controller=Catalogo&action=saveChoferTransportista" method="post" class=" w-100 px-4 formulario" id="formularioChoferTransportista" >
         <div class="divCancelar">
             <a id="cancel"> <span class= "material-icons i-cancel ml-5" title="Cancelar">disabled_by_default</span></a>
         </div>
@@ -27,21 +27,36 @@
             <input type="text" name="id" class="id" id="id" hidden />
             <div>
                 <label for="nombre">Nombres:</label>
-                <input type="text" name="nombre" class="inputLarge capitalize" id="nombre" maxlength="200" placeholder="Ej. LEA"/> 
+                <input type="text" name="nombre" class="inputBig" id="nombre" maxlength="200" placeholder="Ej. Nombre"/> 
             </div>
             <div>
-                <label for="contacto">Apellidos:</label>
-                <input type="text" name="contacto" class="inputLarge capitalize" id="contacto" maxlength="250" placeholder="Ej. Nombre Apellido"/> 
+                <label for="apelllido">Apellidos:</label>
+                <input type="text" name="apellido" class="inputBig" id="apellido" maxlength="250" placeholder="Ej.,Apellido"/> 
             </div>
             <div>
-                <label for="telefono">Vigencia:</label>
-                <input type="text" name="telefono" class="inputSelectMin" id="telefono" maxlength="15" placeholder="Ej.5566778899"/> 
+                <label for="transportista">Transportista:</label>     
+                <select name="transportista" class="inputBig" id="ciudad"> 
+                    <option value="" selected disabled>--Selecciona--</option>
+                    <?php
+                    if (!empty($transportistas)):
+                        foreach ($transportistas as $tr):
+                            ?>
+                            <option value="<?=$tr['idTransportista']?>"><?= $tr['nombreTransportista']?></option>
+                            <?php
+                        endforeach;
+                    endif;
+                    ?>
+                </select>
             </div>
         </div>
         <div class="row d-flex justify-content-between p-1">
-                <div>
+             <div>
+                <label for="licencia">Licencia:</label>
+                <input type="text" name="licencia" class="inputBig" id="licencia"  placeholder="Ej.55668899"/> 
+            </div>
+            <div>
                 <label for="direccion">INE:</label>
-                <input type="text" name="direccion" class="inputLarge " id="direccion" maxlength="250" placeholder="Escribe la dirección del cliente"/> 
+                <input type="text" name="direccion" class="inputBig " id="direccion" maxlength="250" placeholder="Escribe la dirección del cliente"/> 
             </div>
             <div>
                 <label for="ciudad">Comentarios:</label>     
@@ -102,69 +117,41 @@
         </div>
     </form>
 </section>
-<section class="sec-tabla sec-big text-center table-responsive-sm" id="seccionCliente">
-    <?php if (!empty($clientes)): ?>
-        <table class=" table-condensed tabla-big" id="tablaCliente">
+<section class="sec-tabla sec-big text-center table-responsive-sm" id="seccionChoferTransportista">
+    <?php if (!empty($choferes)): ?>
+        <table class=" table-condensed tabla-big" id="tablaChoferTransportista">
             <thead class="titulos-datos" id="titulos">
-            <th></th>
-            <th>Cliente</th>
-            <th>Contacto</th>
-            <th>Teléfono</th>
-            <th>Correo</th>
-            <th>Dirección</th>
-            <th>Ciudad</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Transportista</th>
+            <th>Licencia</th>
+            <th>Vigencia</th>
+            <th>INE</th>
+            <th>Comentarios</th>
             <th></th>
             </thead>
             <tbody>
-                <?php foreach ($clientes as $c): ?>             
+                <?php foreach ($choferes as $c): ?>             
                     <tr class="tr">
-                        <td><span class="material-icons pt-1 i-add" id="show">add_box</span></td>
-                        <td class="text-left w-30"><?= $c->nombre; ?></td>
-                        <td ><?= $c->contacto; ?></td>
-                        <td ><?= $c->telefono; ?></td>
-                        <td ><?= $c->correo; ?></td>
-                        <td ><?= $c->direccion; ?></td>
-                        <td ><?= $c->ciudad_completa; ?></td>
+                        <td id="idTabla" hidden><?= $c->chof_id; ?></td>
+                        <td id="nombreTabla"><?= $c->chof_nombres; ?></td>
+                        <td id="apellidoTabla"><?= $c->chof_apellidos; ?></td>
+                        <td id="transportistaTabla"><?= $c->cat_trans_nombre; ?></td>
+                        <td id="licenciaTabla"><?= $c->chof_licencia; ?></td>
+                        <td id="vigenciaTabla"><?= $c->chof_vigencia; ?></td>
+                        <td id="ineTabla"><?= $c->chof_ine; ?></td>
+                        <td id="comentariosTabla"><?= $c->chof_comentarios; ?></td>
                         <td> 
                             <div>
                                 <a ><span id="edit" class="material-icons i-edit" title="Editar">edit</span></a>                    
-                                <a id="linkDelete" href="<?= catalogosUrl ?>?controller=Catalogo&action=deleteCliente&id=<?= $c->id; ?>" ></a><span id="delete" class="material-icons i-delete" title="Eliminar">delete_forever</span>
+                                <a id="linkDelete" href="<?= catalogosUrl ?>?controller=Catalogo&action=deleteChoferTransportista&id=<?= $c->id; ?>" ></a><span id="delete" class="material-icons i-delete" title="Eliminar">delete_forever</span>
                             </div>
                         </td>
-                    </tr>
-                    <tr class="align-top text-left" id="tbDatos">  
-                        <td class="td-datos">
-                            <strong>Cliente:</strong></br> <div> <label id="nombreTabla"><?= $c->nombre; ?></label></div>
-                            <strong>Contacto:</strong></br> <div> <label id="contactoTabla"><?= $c->contacto; ?></label></div>
-                            <strong>Teléfono:</strong></br>  <div><label id="telefonoTabla"><?= $c->telefono; ?></label> </div>
-                            <strong>Correo:</strong></br><div>  <label id="correoTabla"><?= $c->correo; ?></label></div>
-                            <strong>RFC:</strong></br><div> <label id="rfcTabla"><?= $c->rfc; ?></label></div>
-                        </td>
-                        <td class="td-datos text-left">
-                            <strong>Dirección:</strong></br> <div><label id="direccionTabla"><?= $c->direccion; ?></label></div>
-                            <strong>Ciudad:</strong></br> <div> <label id="ciudadTabla"><?= $c->ciudad_completa; ?></label></div>
-                            <strong>C.P.</strong></br> <div> <label id="codPostalTabla"><?= $c->codigo_postal == 0 ? "" : $c->codigo_postal; ?></label> </div>
-                            <strong>Fecha Alta:</strong></br> <div> <label id="fechaAltaTabla"><?= $c->fecha_alta == '' ? '' : date('d/m/Y', strtotime($c->fecha_alta)); ?></label> </div>
-                        </td>
-                         
-                        <td> 
-                            <div class="py-5 ">
-                                <span class="material-icons i-clear" id="clear">clear</span>
-                            </div>
-                            <div>
-                                <a ><span id="edit" class="material-icons i-edit" title="Editar">edit</span></a>                    
-                                <a id="linkDelete" href="<?= catalogosUrl ?>?controller=Catalogo&action=deleteCliente&id=<?= $c->id; ?>" ></a><span id="delete" class="material-icons i-delete" title="Eliminar">delete_forever</span>
-                            </div>
-                        </td>
-                        <td hidden>
-                            <span id="idTabla"><?= $c->id; ?></span>
-                            <span id="ciudadIdTabla"><?= $c->ciudad_id; ?></span>
-                        </td>
-                    </tr>
+                    </tr> 
                 <?php endforeach; ?>
             </tbody>
         </table>
     <?php else: ?>
-        <span>No hay clientes registrados</span>                   
+        <span>No hay choferes registrados</span>                   
     <?php endif; ?>
 </section>

@@ -29,7 +29,7 @@ require_once models_root . 'catalogos/servicio.php';
 require_once models_root . 'catalogos/almacen.php';
 require_once models_root . 'catalogos/proveedor.php';
 require_once models_root . 'catalogos/transportista_cliente.php';
-require_once models_root . 'catalogos/chofer_transportista_cliente.php';
+require_once models_root . 'catalogos/chofer_transportista.php';
 
 class catalogoController
 {
@@ -2151,7 +2151,26 @@ class catalogoController
 
      public function showChoferesTransportistas()
     {
-        $chofer = new ChoferTransportistaCliente();
+        $p = new Proveedor();
+        $transportistasLea = $p->getTransportistas();
+        
+        $transportistas = array();
+
+        foreach ($transportistasLea as $t) {
+            $transportista[] = [
+                'idTransportista'      => $t->id,
+                'nombreTransportista'    =>  $t->nombre,
+                'is_lea'       => 'S'
+            ];
+             array_push($transportistas, $transportista);
+         } 
+    
+         for ($i; count($transportistas) > $i; $i++) {
+            var_dump($transportistas[$i]);
+         }
+         die();
+
+        $chofer = new ChoferTransportista();
         $choferes = $chofer->getAll();
         require '../../views/catalogos/choferes_transportistas.php';
     }

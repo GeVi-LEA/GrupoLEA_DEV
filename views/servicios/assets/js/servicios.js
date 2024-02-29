@@ -420,6 +420,7 @@ $(document).ready(function () {
 		var ferro = $(this).val();
 		var seccionCamion = $("#seccionCamion");
 		var seccionFerrotolva = $("#seccionFerrotolva");
+		console.log("ferro: ", ferro);
 		if (ferro == "F") {
 			$("#numeroUnidad").trigger("keyup");
 			$("#transportistaTren").attr("name", "transportista").val("Kansas City Southern De Mexico");
@@ -461,6 +462,17 @@ $(document).ready(function () {
 						$(this).show();
 					}
 				});
+		}
+		if (($('input[name="ferrotolva"]:checked').val() != null && $('input[name="ferrotolva"]:checked').val() != "F") || $("#isferrotolva").length == 0) {
+			try {
+				$("#transportista").select2({
+					// theme: "bootstrap-5",
+				});
+			} catch (error) {}
+			$(".transportista").unbind();
+			$("#transportista").change(function () {
+				getChoferes($("#transportista option:selected").val());
+			});
 		}
 	});
 

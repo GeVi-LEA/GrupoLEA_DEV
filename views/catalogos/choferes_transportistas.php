@@ -35,13 +35,13 @@
             </div>
             <div>
                 <label for="transportista">Transportista:</label>     
-                <select name="transportista" class="inputBig" id="ciudad"> 
+                <select name="transportista" class="inputLarge" id="transportista"> 
                     <option value="" selected disabled>--Selecciona--</option>
                     <?php
                     if (!empty($transportistas)):
                         foreach ($transportistas as $tr):
                             ?>
-                            <option value="<?=$tr['idTransportista']?>"><?= $tr['nombreTransportista']?></option>
+                            <option value="<?=$tr['idTransportista'].'-'.$tr['is_lea']?>"><?= $tr['nombreTransportista']?></option>
                             <?php
                         endforeach;
                     endif;
@@ -52,41 +52,21 @@
         <div class="row d-flex justify-content-between p-1">
              <div>
                 <label for="licencia">Licencia:</label>
-                <input type="text" name="licencia" class="inputBig" id="licencia"  placeholder="Ej.55668899"/> 
+                <input type="text" name="licencia" class="inputBig" id="licencia"/> 
             </div>
             <div>
-                <label for="direccion">INE:</label>
-                <input type="text" name="direccion" class="inputBig " id="direccion" maxlength="250" placeholder="Escribe la dirección del cliente"/> 
+                <label for="ine">INE:</label>
+                <input type="text" name="ine" class="inputBig " id="ine"/> 
             </div>
             <div>
-                <label for="ciudad">Comentarios:</label>     
-                <select name="ciudad" class="inputBig" id="ciudad"> 
-                    <option value="" selected disabled>--Selecciona--</option>
-                    <?php
-                    if (!empty($ciudades)):
-                        foreach ($ciudades as $c):
-                            ?>
-                            <option value="<?= $c->id ?>"><?= $c->ciudad_completa ?></option>
-                            <?php
-                        endforeach;
-                    endif;
-                    ?>
-                </select>
-                <a href="<?= catalogosUrl ?>?controller=Catalogo&action=showCiudades"><span title="Agregar ciudad" class="material-icons i-add p-1">add</span></a>
-            </div>
-              <div>
-                <label for="codigoPostal">C.P.</label>
-                <input type="text" name="codigoPostal" class="inputSmall" id="codigoPostal" maxlength="5" placeholder="Ej.55665"/> 
+                <label for="fechaVigencia">Vigencia:</label>     
+                    <input type='text' name="fechaVigencia" id="fechaVigencia" class="inputSelectMin" readOnly />
             </div>
         </div>
         <div class="row d-flex justify-content-between p-1">
-            <div>
-                <label for="correo">Correo:</label>
-                <input type="text" name="correo" class="inputLarge" id="correo" maxlength="100" placeholder="nombre.apellido@dominio.com"/> 
-            </div>
              <div>
-                <label for="rfc">RFC:</label>
-                <input type="text" name="rfc" class="inputMedium text-uppercase" id="rfc" maxlength="25" placeholder="Ingresa RFC"/> 
+                <label for="rfc">Comentarios:</label>
+                <input type="text" name="comentarios" class="inputXL" id="comentarios"/> 
             </div>
           
             <div>
@@ -100,10 +80,10 @@
                 <div >
                     <ul class="error text-left" id="error">
                         <?php if (isset($_SESSION['errores']['nombre']) && $_SESSION['errores']['nombre'] == 'invalid'): ?>
-                            <li>El <b>nombre</b> de Cliente ya existe</li>                   
+                            <li>El <b>nombre</b> de Estatus ya existe</li>                   
                         <?php endif; ?>
                         <?php if (isset($_SESSION['errores']['clave']) && $_SESSION['errores']['clave'] == 'invalid'): ?>
-                            <li>La <b>clave</b> de Cliente ya existe</li>                
+                            <li>La <b>clave</b> de Estatus ya existe</li>                
                             <?php
                         endif;
                         Utils::deleteSession('result');
@@ -133,10 +113,11 @@
             <tbody>
                 <?php foreach ($choferes as $c): ?>             
                     <tr class="tr">
-                        <td id="idTabla" hidden><?= $c->chof_id; ?></td>
+                        <td id="idTabla" hidden ><?= $c->chof_id; ?></td>
+                        <td id="idTransportistaTabla" hidden><?= $c->chof_trans_id.'-'.$c->chof_is_lea; ?></td>
                         <td id="nombreTabla"><?= $c->chof_nombres; ?></td>
                         <td id="apellidoTabla"><?= $c->chof_apellidos; ?></td>
-                        <td id="transportistaTabla"><?= $c->cat_trans_nombre; ?></td>
+                        <td id="transportistaTabla"><?= $c->transportista; ?></td>
                         <td id="licenciaTabla"><?= $c->chof_licencia; ?></td>
                         <td id="vigenciaTabla"><?= $c->chof_vigencia; ?></td>
                         <td id="ineTabla"><?= $c->chof_ine; ?></td>
@@ -144,7 +125,7 @@
                         <td> 
                             <div>
                                 <a ><span id="edit" class="material-icons i-edit" title="Editar">edit</span></a>                    
-                                <a id="linkDelete" href="<?= catalogosUrl ?>?controller=Catalogo&action=deleteChoferTransportista&id=<?= $c->id; ?>" ></a><span id="delete" class="material-icons i-delete" title="Eliminar">delete_forever</span>
+                                <a id="linkDelete" href="<?= catalogosUrl ?>?controller=Catalogo&action=deleteChoferTransportista&id=<?= $c->chof_id; ?>" ></a><span id="delete" class="material-icons i-delete" title="Eliminar">delete_forever</span>
                             </div>
                         </td>
                     </tr> 

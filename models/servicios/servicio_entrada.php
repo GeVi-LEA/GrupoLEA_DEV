@@ -551,6 +551,7 @@ class ServicioEntrada
                 , sello3 = '{$this->getSello3()}'
                 , observaciones = '{$this->getObservaciones()}'
                 , peso_obligatorio = '{$this->getPesoObligatorio()}'
+                , transp_lea_cliente = '{$this->getTranspLeaCliente()}'
                  where id = {$this->getId()}";
         // print_r('<pre>');
         // print_r($sql);

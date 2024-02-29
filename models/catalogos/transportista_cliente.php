@@ -1,6 +1,6 @@
 <?php
 
-class TransportistasClientes
+class TransportistaCliente
 {
     private $id;
     private $nombre;

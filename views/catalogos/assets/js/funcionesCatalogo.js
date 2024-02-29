@@ -123,6 +123,11 @@ $(document).ready(function () {
 			: $("#fechaProximaEvaluacion").val(
 					trDatos.find("#fechaProxEvaTabla").html()
 			  );
+        $("#fechaVigencia") == undefined
+			? null
+			: $("#fechaVigencia").val(
+					trDatos.find("#fechaVigenciaTabla").html()
+			  );
 		$("#calificacion") == undefined
 			? null
 			: $("#calificacion").val(trDatos.find("#calificacionTabla").html());
@@ -211,6 +216,15 @@ $(document).ready(function () {
 		$("#factura") == undefined
 			? null
 			: $("#factura").val(trDatos.find("#facturaTabla").html());
+        $("#licencia") == undefined
+			? null
+			: $("#licencia").val(trDatos.find("#licenciaTabla").html());
+        $("#ine") == undefined
+			? null
+			: $("#ine").val(trDatos.find("#ineTabla").html());
+        $("#transportista") == undefined
+			? null
+			: $("#transportista").val(trDatos.find("#idTransportistaTabla").html());
 		$("#macEthernet") == undefined
 			? null
 			: $("#macEthernet").val(trDatos.find("#macEthernetTabla").html());
@@ -235,6 +249,7 @@ $(document).ready(function () {
 		$("#tipoProducto") == undefined
 			? null
 			: $("#tipoProducto").val(trDatos.find("#tipoProductoTabla").html());
+        
 		$("#spanDocumento") == undefined
 			? null
 			: $("#spanDocumento").html(
@@ -369,7 +384,7 @@ $(document).ready(function () {
 	});
 
 	$(
-		"#fechaAlta, #fechaLiberacion, #fechaEvaluacion,  #fechaInicioEvaluacion,  #fechaFinEvaluacion"
+		"#fechaAlta, #fechaLiberacion, #fechaEvaluacion,  #fechaInicioEvaluacion,  #fechaFinEvaluacion,  #fechaVigencia"
 	).datepicker({
 		showOn: "button",
 		changeMonth: true,

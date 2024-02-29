@@ -151,7 +151,7 @@ class serviciosController
             $transportes = $tipoTrans->isCamion();
         }
 
-        $catTransportes     = new TransportistasClientes();
+        $catTransportes = new TransportistaCliente();
         $cat_transportistas = $catTransportes->getAll();
 
         $catChoferes  = new ChoferTransportista();
@@ -885,7 +885,7 @@ class serviciosController
         $tipoTrans   = new TipoTransporte();
         $transportes = $tipoTrans->getAll();
 
-        $catTransportes     = new TransportistasClientes();
+        $catTransportes     = new TransportistaCliente();
         $cat_transportistas = $catTransportes->getAll();
 
         require_once views_root . 'servicios/cargas_descargas.php';

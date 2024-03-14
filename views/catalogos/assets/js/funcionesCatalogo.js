@@ -20,6 +20,13 @@ $(document).ready(function () {
 		$(this).removeClass("required");
 	});
 
+    //Unidad de medida catalogo laboratorio
+
+    $("#unidadMedida").change(function () {
+        var unidad = $("#unidadMedida option:selected").text();
+        $("form").find(".unidadMed").text(unidad);
+    });
+
 	//Función boton editar con mas de una fila
 	tabla.on("click", "#edit", function () {
 		var trSelect = $(this).parent().closest("tr");

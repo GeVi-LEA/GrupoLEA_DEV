@@ -103,5 +103,10 @@
                 <a href="<?= catalogosUrl ?>?controller=Catalogo&action=showAlmacenes"><i class="fas fa-boxes icon"></i><span>Almacenes</span></a>
             </div>
         </div>
+     <div class ="col-md-6 col-lg-3 p-1">
+            <div class="item-medium">
+                <a href="<?= catalogosUrl ?>?controller=Catalogo&action=showEquipoLaboratorio"><i class="fas fa-flask-vial icon"></i><span>Equipo laborario</span></a>
+            </div>
+        </div>s
 
      </div>

@@ -4,8 +4,10 @@ require_once base . '/composer/vendor/autoload.php';
 require_once base . '/vendor/autoload.php';
 
 // require (base . '/utils/toPDF/fpdf/fpdf.php');
-// use Dompdf\Dompdf;
-// use Dompdf\Options;
+// Reference the Dompdf namespace
+use Dompdf\Dompdf;
+// Also reference the options namespace
+use Dompdf\Options;
 use Spipu\Html2Pdf\Html2Pdf;
 
 class PDF
@@ -120,7 +122,7 @@ class PDF
         $pdf->output($s['folio'] . '.pdf', 'I');
     }
 
-    public static function crearPdfServicio($s, $mostrar = false)
+    public static function crearPdfServicio($s, $mostrar = false, $servicio_entrada = null)
     {
         $empresa = empresas[intval(1)];
 
@@ -135,83 +137,45 @@ class PDF
 
         if ($mostrar) {
             $pdf->output($s->folio . '.pdf', 'I');
+        } else {
+            $path = views_root . 'servicios/uploads/' . $servicio_entrada['numUnidad'];
+            if (!is_dir($path)) {
+                mkdir($path, 0777, true);
+            }
+            $pdf->output(views_root . 'servicios/uploads/' . $servicio_entrada['numUnidad'] . '/' . $s->folio . '_' . $servicio_entrada['numUnidad'] . '.pdf', 'F');
         }
     }
 
     public static function crearPdfEntrada($url = __DIR__, $path = '', $filename = 'temp', $mostrar = true)
     {
-        /*
-         * try {
-         *     // // code...
-         *     // $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'Letter-L', 'tempDir' => '/tmp']);
-         *     // // $mpdf = new \Mpdf\Mpdf();
-         *
-         *     // // Fetch website content
-         *     // $websiteContent = file_get_contents($url);
-         *
-         *     // $mpdf->WriteHTML($websiteContent);
-         *     // // $mpdf->Output();
-         *     // // $html = ob_get_clean();
-         *
-         *     // // ob_end_clean();
-         *     // // $pdf->writeHTML($html);
-         *     $pdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'Letter', 'tempDir' => '/tmp']);
-         *     // ob_start();
-         *     // require_once views_root . 'servicios/formato_servicio.php';
-         *     // $html = ob_get_contents();
-         *     // ob_end_clean();
-         *     // $pdf->writeHTML($html);
-         *     $pdf->use_kwt   = true;
-         *     $websiteContent = file_get_contents($url);
-         *     $pdf->WriteHTML($websiteContent);
-         *     if ($mostrar) {
-         *         if (!is_dir($path)) {
-         *             mkdir($path, 0777, true);
-         *         }
-         *         $pdf->output($path . '/' . $filename . '3.pdf', 'F');
-         *         // $pdf->output($path . '/' . $filename . '.pdf', 'I');
-         *     }
-         *     return json_encode(['mensaje' => 'OK', 'urlfile' => $path . '/' . $filename . '.pdf', 'websiteContent' => $websiteContent]);
-         * } catch (Exception $th) {
-         *     return json_encode(['mensaje' => 'ERROR', 'detalle' => $th]);
-         * }
-         */
-
-        // require_once base . '/vendor/spipu/html2pdf/src/Html2Pdf.php';
-        // require_once base . '/vendor/spipu/html2pdf/src/Exception/Html2PdfException.php';
-        // require_once base . '/vendor/spipu/html2pdf/src/Exception/ExceptionFormatter.php';
-
         try {
-            // ob_start();
-            // include views_root . 'servicios/formato_servicio.php';
             $websiteContent = file_get_contents($url);
-            // $content        = ob_get_clean();
-            // print_r('<pre>');
-            // print_r($path . '/' . $filename . '.pdf');
-            // print_r('</pre>');
-            // die();
             if (!is_dir($path)) {
                 mkdir($path, 0777, true);
             }
-            $html2pdf = new Html2Pdf('P', 'LETTER', 'es', true, 'UTF-8', array(5, 5, 5, 5));
-            $html2pdf->pdf->SetDisplayMode('fullpage');
-            // $html2pdf->writeHTML($websiteContent);
-            // $html2pdf->output(base . '/' . $path . '/' . $filename . '.pdf', 'F');
-            // $html2pdf = new Html2Pdf();
-            $html2pdf->writeHTML($websiteContent);
 
-            $html2pdf->output(base . '/' . $path . '/' . $filename . '.pdf', 'F');
+            // First initialise the options
+            $options = new Options();
+            // This way of setting options is new see: https://github.com/dompdf/dompdf/issues/2181
+
+            $options->setIsRemoteEnabled(true);
+            $options->setDefaultFont('Times-Roman', 9);
+            // Instantiate and use the dompdf class with the options
+            $dompdf = new Dompdf($options);
+            $dompdf->set_option('fontDir', base . '/vendor/dompdf/dompdf/lib/fonts');
+            $dompdf->set_option('fontCache', base . '/vendor/dompdf/dompdf/lib/fonts');
+
+            $dompdf->loadHtml($websiteContent);
+            $dompdf->setPaper('LETTER', 'portrait');  // landscape / portrait
+
+            // Render the HTML as PDF
+            $dompdf->render();
+            $output = $dompdf->output();
+            file_put_contents(base . '/' . $path . '/' . $filename . '.pdf', $output);
+
             return json_encode(['mensaje' => 'OK', 'urlfile' => $path . '/' . $filename . '.pdf']);
-        } catch (Html2PdfException $e) {
-            $html2pdf->clean();
-
-            $formatter = new ExceptionFormatter($e);
-            // echo $formatter->getHtmlMessage();
-            return json_encode([
-                                   'mensaje' => 'ERROR',
-                                   'content' => $websiteContent,
-                                   'detalle' => $formatter->getHtmlMessage(),
-                               ]);
+        } catch (Excepction $th) {
+            return json_encode(['mensaje' => 'ERROR', 'urlfile' => $path . '/' . $filename . '.pdf', 'th' => $th]);
         }
     }
 }

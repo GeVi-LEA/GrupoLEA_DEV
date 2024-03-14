@@ -1,6 +1,18 @@
 {
-    "require": {
-        "spipu/html2pdf": "^5.2",
-        "dompdf/dompdf": "^2.0"
-    }
+	"require": {
+		"spipu/html2pdf": "^5.2",
+		"dompdf/dompdf": "^2.0",
+		"mpdf/mpdf": "^8.2"
+	},
+	"keywords": [
+		"js",
+		"jquery",
+		"file manager",
+		"file upload"
+	],
+	"autoload": {
+		"psr-0": {
+			"jQueryFM_": "src/"
+		}
+	}
 }

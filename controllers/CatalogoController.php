@@ -30,6 +30,9 @@ require_once models_root . 'catalogos/almacen.php';
 require_once models_root . 'catalogos/proveedor.php';
 require_once models_root . 'catalogos/transportista_cliente.php';
 require_once models_root . 'catalogos/chofer_transportista.php';
+require_once models_root . 'catalogos/prueba_laboratorio.php';
+require_once models_root . 'catalogos/equipo_laboratorio.php';
+require_once models_root . 'catalogos/marca_equipo_laboratorio.php';
 
 class catalogoController
 {
@@ -2095,25 +2098,25 @@ class catalogoController
 
     public function getProveedores()
     {
-        $c = new Proveedor();
+        $c           = new Proveedor();
         $proveedores = $c->getAll();
 
         echo json_encode(['mensaje' => 'OK', 'proveedores' => $proveedores]);
     }
-    
-         public function showTransportistasClientes()
+
+    public function showTransportistasClientes()
     {
-        $trans= new TransportistasClientes();
+        $trans          = new TransportistaCliente();
         $transportistas = $trans->getAll();
         require '../../views/catalogos/transportistas_clientes.php';
     }
 
-            public function deleteTransportistaCliente()
+    public function deleteTransportistaCliente()
     {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
 
-           $trans= new TransportistasClientes();
+            $trans = new TransportistaCliente();
             $trans->setId($id);
             $trans->delete();
         }
@@ -2126,10 +2129,9 @@ class catalogoController
         Utils::deleteSession('errores');
 
         if (isset($_POST['nombre']) && $_POST['nombre'] != '') {
-            $trans = new TransportistasClientes();
+            $trans = new TransportistaCliente();
             $trans->setNombre($_POST['nombre']);
             $trans->setComentarios($_POST['descripcion']);
-
 
             if ($_POST['id'] != null || $_POST['id'] != '') {
                 $trans->setId($_POST['id']);
@@ -2149,49 +2151,74 @@ class catalogoController
         }
     }
 
-     public function showChoferesTransportistas()
+    public function showChoferesTransportistas()
     {
-        $p = new Proveedor();
+        $p                 = new Proveedor();
         $transportistasLea = $p->getTransportistas();
-        
-        $transportistas = array();
+        $trans             = array();
 
         foreach ($transportistasLea as $t) {
-            $transportista[] = [
-                'idTransportista'      => $t->id,
-                'nombreTransportista'    =>  $t->nombre,
-                'is_lea'       => 'S'
+            $transportistas[] = [
+                'nombreTransportista' => $t->nombre,
+                'idTransportista'     => $t->id,
+                'is_lea'              => 'S'
             ];
-             array_push($transportistas, $transportista);
-         } 
-    
-         for ($i; count($transportistas) > $i; $i++) {
-            var_dump($transportistas[$i]);
-         }
-         die();
+        }
 
-        $chofer = new ChoferTransportista();
+        $tr                    = new TransportistaCliente();
+        $transportistasCliente = $tr->getAll();
+
+        foreach ($transportistasCliente as $t) {
+            $transportistas[] = [
+                'nombreTransportista' => $t->nombre,
+                'idTransportista'     => $t->id,
+                'is_lea'              => 'N'
+            ];
+
+            sort($transportistas);
+        }
+
+        $chofer   = new ChoferTransportista();
         $choferes = $chofer->getAll();
+
         require '../../views/catalogos/choferes_transportistas.php';
     }
 
-
-    public function saveChoferTransportistaCliente()
+    public function saveChoferTransportista()
     {
         Utils::deleteSession('result');
         Utils::deleteSession('errores');
 
-        if (isset($_POST['nombre']) && $_POST['nombre'] != '') {
-            $servicio = new Servicio();
-            $servicio->setNombre($_POST['nombre']);
-            $servicio->setDescripcion($_POST['descripcion']);
-            $servicio->setClave($_POST['clave']);
+        if (isset($_POST['nombre']) && $_POST['nombre'] != '' && isset($_POST['transportista']) && $_POST['transportista'] != '') {
+            $id            = $_POST['id'];
+            $nombre        = $_POST['nombre'];
+            $apellido      = $_POST['apellido'];
+            $licencia      = $_POST['licencia'];
+            $ine           = $_POST['ine'];
+            $comentarios   = $_POST['comentarios'];
+            $fechaVigencia = $_POST['fechaVigencia'] == '' ? null : str_replace('/', '-', $_POST['fechaVigencia']);
+            $transportista = $_POST['transportista'];
 
-            if ($_POST['id'] != null || $_POST['id'] != '') {
-                $servicio->setId($_POST['id']);
-                $save = $servicio->edit();
+            $arrayTransportista = explode('-', $transportista);
+            $idTransportista    = $arrayTransportista[0];
+            $isLea              = $arrayTransportista[1];
+
+            $ch = new ChoferTransportista();
+            $ch->setTransportistaId($idTransportista);
+            $ch->setNombres($nombre);
+            $ch->setApellidos($apellido);
+            $ch->setIsLea($isLea);
+            $ch->setVigencia($fechaVigencia != null ? date('Y-m-d', strtotime($fechaVigencia)) : null);
+            var_dump($licencia);
+            $ch->setNumLicencia($licencia);
+            $ch->setIne($ine);
+            $ch->setComentarios($comentarios);
+
+            if ($id != null || $id != '') {
+                $ch->setId($id);
+                $save = $ch->edit();
             } else {
-                $save = $servicio->save();
+                $save = $ch->save();
             }
 
             if ($save) {
@@ -2199,23 +2226,239 @@ class catalogoController
             } else {
                 $_SESSION['result'] = 'false';
             }
-            header('Location:' . catalogosUrl . '?controller=Catalogo&action=showServicios');
+            header('Location:' . catalogosUrl . '?controller=Catalogo&action=showChoferesTransportistas');
         } else {
-            header('Location:' . catalogosUrl . '?controller=Catalogo&action=showServicios');
+            header('Location:' . catalogosUrl . '?controller=Catalogo&action=showChoferesTransportistas');
         }
     }
 
-        public function deleteChoferTransportistaClientes()
+    public function deleteChoferTransportista()
     {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
 
-            $servicio = new Servicio();
-            $servicio->setId($id);
-            $servicio->delete();
+            $ch = new ChoferTransportista();
+            $ch->setId($id);
+            $ch->delete();
         }
-        header('Location:' . catalogosUrl . '?controller=Catalogo&action=showServicios');
+        header('Location:' . catalogosUrl . '?controller=Catalogo&action=showChoferesTransportistas');
     }
-    
 
+    public function showPruebasLaboratorio()
+    {
+        $a       = new PruebaLaboratorio();
+        $pruebas = $a->getAll();
+        require '../../views/catalogos/pruebas_laboratorio.php';
+    }
+
+    public function savePruebaLaboratorio()
+    {
+        Utils::deleteSession('result');
+        Utils::deleteSession('errores');
+
+        if (isset($_POST['nombre']) && $_POST['nombre'] != '') {
+            $a = new PruebaLaboratorio();
+            $a->setNombre($_POST['nombre']);
+            $a->setDescripcion($_POST['descripcion']);
+
+            if ($_POST['id'] != null || $_POST['id'] != '') {
+                $a->setId($_POST['id']);
+                $save = $a->edit();
+            } else {
+                $save = $a->save();
+            }
+
+            if ($save) {
+                $_SESSION['result'] = 'true';
+            } else {
+                $_SESSION['result'] = 'false';
+            }
+            header('Location:' . catalogosUrl . '?controller=Catalogo&action=showPruebasLaboratorio');
+        } else {
+            header('Location:' . catalogosUrl . '?controller=Catalogo&action=showPruebasLaboratorio');
+        }
+    }
+
+    public function deletePruebaLaboratrorio()
+    {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+
+            $a = new PruebaLaboratorio();
+            $a->setId($id);
+            $a->delete();
+        }
+        header('Location:' . catalogosUrl . '?controller=Catalogo&action=showPruebasLaboratorio');
+    }
+
+    public function getPruebasLaboratorio()
+    {
+        $a       = new PruebaLaboratorio();
+        $pruebas = $a->getAll();
+        print_r(json_encode($pruebas));
+    }
+
+        public function showMarcasEquiposLaboratorio()
+    {
+        $a       = new MarcaEquipoLaboratorio();
+        $marcas = $a->getAll();
+        require '../../views/catalogos/marcas_equipos_laboratorio.php';
+    }
+
+    public function saveMarcaEquipoLaboratorio()
+    {
+        Utils::deleteSession('result');
+        Utils::deleteSession('errores');
+
+        if (isset($_POST['nombre']) && $_POST['nombre'] != '') {
+            $a = new MarcaEquipoLaboratorio();
+            $a->setNombre($_POST['nombre']);
+            $a->setDescripcion($_POST['descripcion']);
+
+            if ($_POST['id'] != null || $_POST['id'] != '') {
+                $a->setId($_POST['id']);
+                $save = $a->edit();
+            } else {
+                $save = $a->save();
+            }
+
+            if ($save) {
+                $_SESSION['result'] = 'true';
+            } else {
+                $_SESSION['result'] = 'false';
+            }
+            header('Location:' . catalogosUrl . '?controller=Catalogo&action=showMarcasEquiposLaboratorio');
+        } else {
+            header('Location:' . catalogosUrl . '?controller=Catalogo&action=showMarcasEquiposLaboratorio');
+        }
+    }
+
+    public function deleteMarcaEquipoLaboratrorio()
+    {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+
+            $a = new MarcaEquipoLaboratorio();
+            $a->setId($id);
+            $a->delete();
+        }
+        header('Location:' . catalogosUrl . '?controller=Catalogo&action=showMarcasEquiposLaboratorio');
+    }
+
+    public function getMarcasequiposLaboratorio()
+    {
+        $a       = new MarcaEquipoLaboratorio();
+        $pruebas = $a->getAll();
+        print_r(json_encode($pruebas));
+    }
+
+    public function showEquipoLaboratorio()
+    {
+        $equipo  = new EquipoLaboratorio();
+        $equipos = $equipo->getAll();
+
+        $m = new MarcaEquipoLaboratorio();
+        $marcas = $m->getAll();
+        
+        require '../../views/catalogos/equipos_laboratorio.php';
+    }
+
+    public function saveEquipoLaboratorio()
+    {
+        Utils::deleteSession('result');
+        Utils::deleteSession('errores');
+
+        if (isset($_POST['tipoEquipo']) && $_POST['modelo'] != '' && isset($_POST['marca']) && $_POST['serie'] != '') {
+            $id              = $_POST['id'] != '' ? $_POST['id'] : null;
+            $tipoEquipo      = $_POST['tipoEquipo'];
+            $modelo          = $_POST['modelo'];
+            $marca           = $_POST['marca'];
+            $serie           = $_POST['serie'];
+            $factura         = $_POST['factura'];
+            $fechaAlta       = $_POST['fechaAlta'] == '' ? null : str_replace('/', '-', $_POST['fechaAlta']);
+            $procesador      = $_POST['procesador'];
+            $discoDuro       = $_POST['discoDuro'];
+            $ram             = $_POST['ram'];
+            $usuario         = $_POST['usuarioId'];
+            $fechaAsignacion = $_POST['fechaAsignacion'] == '' ? null : str_replace('/', '-', $_POST['fechaAsignacion']);
+            $macEthernet     = $_POST['macEthernet'];
+            $macWifi         = $_POST['macWifi'];
+            $aplicaciones    = isset($_POST['aplicaciones']) ? $_POST['aplicaciones'] : '';
+            $observaciones   = $_POST['observaciones'];
+
+            $equipo = new EquipoComputo();
+            $equipo->setTipoEquipo($tipoEquipo);
+            $equipo->setUsuarioId($usuario != '' ? $usuario : 'null');
+            $equipo->setModelo($modelo);
+            $equipo->setNumeroSerie($serie);
+            $equipo->setMarca($marca);
+            $equipo->setFactura($factura);
+            $equipo->setProcesador($procesador);
+            $equipo->setMemoriaRam($ram);
+            $equipo->setdiscoDuro($discoDuro);
+            $equipo->setFechaCompra($fechaAlta != null ? date('Y-m-d', strtotime($fechaAlta)) : null);
+            $equipo->setFechaAsignacion($fechaAsignacion != null ? date('Y-m-d', strtotime($fechaAsignacion)) : null);
+            $equipo->setRedLan($macEthernet);
+            $equipo->setRedWifi($macWifi);
+            $equipo->setAplicaciones(json_encode($aplicaciones));
+            $equipo->setObservaciones($observaciones);
+
+            if ($id != null) {
+                $equipo->setId($id);
+                $save = $equipo->edit();
+            } else {
+                $ultimo      = $equipo->ultimoEquipoTipoEquipo();
+                $folio       = $ultimo->folio != null ? $ultimo->folio : 'LLM-' . $tipoEquipo . '-0';
+                $ultimoFolio = substr($folio, strrpos($folio, '-') + 1);
+                $sigFolio    = 'LLM-' . $tipoEquipo . '-' . ($ultimoFolio + 1);
+                $equipo->setFolio($sigFolio);
+                $save = $equipo->save();
+            }
+            header('Location:' . catalogosUrl . '?controller=Catalogo&action=showEquipoComputo');
+        }
+    }
+
+    public function deleteEquipolaboratorio()
+    {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+
+            $equipo = new EquipoComputo();
+            $equipo->setId($id);
+            $equipo->delete();
+        }
+        header('Location:' . catalogosUrl . '?controller=Catalogo&action=showEquipoComputo');
+    }
+
+    public function exportarInventarioEquipolaboratorio()
+    {
+        Utils::noLoggin();
+        if (isset($_POST['formato'])) {
+            $e       = new EquipoComputo();
+            $equipos = $e->getAll();
+            require_once utils_root . 'toExcel/excel.php';
+            $documentoNorma = new DocumentoNorma();
+            $doc            = $documentoNorma->getByCodigo('FO-SI-004');
+            Excel::generarInventarioEquipoComputo($equipos, $doc);
+        }
+    }
+
+    public function equipolaboratorioById()
+    {
+        if (isset($_POST['idEquipo'])) {
+            $idEquipo = $_POST['idEquipo'];
+
+            $equipo = new EquipoComputo();
+            $e      = $equipo->getEquipoById($idEquipo);
+
+            print_r(json_encode($e));
+        }
+    }
+
+    public function getTransportistasClientes()
+    {
+        $s              = new TransportistaCliente();
+        $transportistas = $s->getAll();
+        echo json_encode(['mensaje' => 'OK', 'transportistas' => $transportistas]);
+    }
 }

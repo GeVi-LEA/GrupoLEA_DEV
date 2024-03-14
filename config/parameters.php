@@ -57,3 +57,10 @@ define('aplicaciones_sistemas', array(1 => 'WIN PRO',      2 => 'Office 365',   
 
 // Servicios
 define('tipo_tarimas', array(1 => 'Tratada', 2 => 'Normal'));
+                                    
+//Laboratorio
+define('unidades_medida', array(1 => '&deg;C', 2 => '%', 3 =>'&deg;API', 4 => 'cm/in', 5 =>'cm&#713;&#185;', 6 =>'Color ASTM',
+        7 =>'ft/min', 8 =>'g', 9 =>'g/cm&sup3;', 10 =>'hPa/&deg;C/%HR', 11 =>'Kg', 12 =>'KV', 13 =>'L/min', 14 =>'mm&sup2;/s',
+        15 =>'mN/m', 16 =>'&deg;C/%HR', 17 =>'p.p.m', 18 =>'s'));
+
+define('estatus_equipos', array(1 => 'Activo', 2 =>'Inactivo', 3 => 'Baja'));        

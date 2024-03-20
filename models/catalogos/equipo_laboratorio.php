@@ -3,7 +3,6 @@
 class EquipoLaboratorio {
 
     private $id;
-    private $pruebaId;
     private $estatusId;
     private $unidadId;
     private $codigo;
@@ -16,9 +15,11 @@ class EquipoLaboratorio {
     private $intervaloPrueba;
     private $puntosCalibrar;
     private $factura;
-    private $fechaCompra;
     private $fechaAlta;
     private $fechaBaja;
+    private $fechaCalibracion;
+    private $docFactura;
+    private $docCalibracion;
     private $observaciones;
     private $db;
 
@@ -26,12 +27,8 @@ class EquipoLaboratorio {
         $this->db = Database::connect();
     }
 
-        public function getId() {
+    public function getId() {
         return $this->id;
-    }
-
-    public function getPruebaId() {
-        return $this->pruebaId;
     }
 
     public function getEstatusId() {
@@ -82,10 +79,6 @@ class EquipoLaboratorio {
         return $this->factura;
     }
 
-    public function getFechaCompra() {
-        return $this->fechaCompra;
-    }
-
     public function getFechaAlta() {
         return $this->fechaAlta;
     }
@@ -94,16 +87,24 @@ class EquipoLaboratorio {
         return $this->fechaBaja;
     }
 
+    public function getFechaCalibracion() {
+        return $this->fechaCalibracion;
+    }
+
+    public function getDocFactura() {
+        return $this->docFactura;
+    }
+
+    public function getDocCalibracion() {
+        return $this->docCalibracion;
+    }
+
     public function getObservaciones() {
         return $this->observaciones;
     }
 
     public function setId($id): void {
         $this->id = $id;
-    }
-
-    public function setPruebaId($pruebaId): void {
-        $this->pruebaId = $pruebaId;
     }
 
     public function setEstatusId($estatusId): void {
@@ -154,10 +155,6 @@ class EquipoLaboratorio {
         $this->factura = $factura;
     }
 
-    public function setFechaCompra($fechaCompra): void {
-        $this->fechaCompra = $fechaCompra;
-    }
-
     public function setFechaAlta($fechaAlta): void {
         $this->fechaAlta = $fechaAlta;
     }
@@ -166,26 +163,34 @@ class EquipoLaboratorio {
         $this->fechaBaja = $fechaBaja;
     }
 
+    public function setFechaCalibracion($fechaCalibracion): void {
+        $this->fechaCalibracion = $fechaCalibracion;
+    }
+
+    public function setDocFactura($docFactura): void {
+        $this->docFfactura = $docFactura;
+    }
+
+    public function setDocCalibracion($docCalibracion): void {
+        $this->docCalibracion = $docCalibracion;
+    }
+
     public function setObservaciones($observaciones): void {
         $this->observaciones = $observaciones;
     }
-    
+
     public function save() {
-        $sql = "insert into catalogo_equipos_laboratorio values(null,'{$this->getPruebaId()}',  {$this->getUsuarioId()}, {$this->getTipoEquipo()}, '{$this->getModelo()}', {$this->getMarca()}, '{$this->getNumeroSerie()}', "
-                . "'{$this->getFactura()}', '{$this->getProcesador()}', '{$this->getMemoriaRam()}', '{$this->getDiscoDuro()}', '{$this->getRedLan()}', '{$this->getRedWifi()}','{$this->getAplicaciones()}',";
-         
-                if($this->getFechaCompra() != null){
-                    $sql.= "'{$this->getFechaCompra()}',";
-                }else{
-                    $sql.="null, ";
-                }
+        $sql = "insert into catalogo_equipos_laboratorio values(null, {$this->getPruebaId()},  {$this->getEstatusId()}, {$this->getUnidadId()}, '{$this->getCodigo()}',"
+        . "'{$this->getNombre()}', {$this->getMarca()}, '{$this->getModelo()}', '{$this->getNumeroSerie()}', '{$this->getIntervaloUso()}', '{$this->getIntervaloTrabajo()}', "
+        . "'{$this->getIntervaloPrueba()}', '{$this->getPuntosCalibrar()}', '{$this->getFactura()}', now(), null,";
+
                 
-               if($this->getFechaAsignacion() != null){
-                    $sql.= "'{$this->getFechaAsignacion()}',";
+               if($this->getFechaCalibracion() != null){
+                    $sql.= "'{$this->getFechaCalibracion()}',";
                 }  else{
                     $sql.="null, ";
                 }
-                  $sql.="null, curdate(), '{$this->getObservaciones()}');";
+                  $sql.="'{$this->docFactura()}', '{$this->docCalibracion()}','{$this->getObservaciones()}');";
      
         $save = $this->db->query($sql);
         $result = false;
@@ -195,60 +200,14 @@ class EquipoLaboratorio {
         return $result;
     }
 
-    public function edit() {
-        $sql =  "update catalogo_equipos_computo set usuario_id = {$this->getUsuarioId()}, tipo_equipo = {$this->getTipoEquipo()}, modelo = '{$this->getModelo()}', marca = {$this->getMarca()}, "
-                . "numero_serie = '{$this->getNumeroSerie()}', factura = '{$this->getFactura()}', procesador = '{$this->getProcesador()}', memoria_ram = '{$this->getMemoriaRam()}', "
-                . "disco_duro = '{$this->getDiscoDuro()}', red_lan = '{$this->getRedLan()}', red_wifi = '{$this->getRedWifi()}', aplicaciones = '{$this->getAplicaciones()}', ";
-        
-                if($this->getFechaCompra() != null){
-                    $sql.= "fecha_compra = '{$this->getFechaCompra()}',";
-                }else{
-                    $sql.="fecha_compra = null, ";
-                }
-                
-               if($this->getFechaAsignacion() != null){
-                    $sql.= "fecha_asignacion = '{$this->getFechaAsignacion()}',";
-                }  else{
-                    $sql.="fecha_asignacion = null, ";
-                }
-        $sql = $sql . "observaciones ='{$this->getObservaciones()}' where id = {$this->getId()};";
-
-        $save = $this->db->query($sql);
-        $result = false;
-        if ($save) {
-            $result = true;
-        }
-        return $result;
-    }
-
-    public function delete() {
-        $delete = $this->db->query("update catalogo_equipos_computo set fecha_baja = curdate() where id={$this->getId()}");
-        $result = false;
-        if ($delete) {
-            $result = true;
-        }
-        return $result;
-    }
-    
-        public function mantenimientoEquipo() {
-        $delete = $this->db->query("update catalogo_equipos_computo set fecha_mantenimiento = curdate() where id={$this->getId()}");
-        $result = false;
-        if ($delete) {
-            $result = true;
-        }
-        return $result;
-    }
-    
-        public function getAll($where = null) {
+           public function getAll($where = null) {
         $result = array();
-        $sql = "SELECT e.*, d.nombre as departamento, u.id as usuarioId, concat(u.nombres,' ', u.apellidos) as usuario FROM catalogo_equipos_computo as e "
-                . "left join catalogo_usuarios u on u.id = e.usuario_id "
-                . "left join catalogo_departamentos d on u.departamento_id = d.id ";
+        $sql = "SELECT e.* FROM catalogo_equipos_laboratorio as e ";
                 if($where != null){
               $sql .= $where;
         }
       else{
-         $sql .= " order by e.folio asc";
+         $sql .= " order by e.codigo asc";
       }      
         $equipos = $this->db->query($sql);
         while ($e = $equipos->fetch_object()) {
@@ -256,30 +215,5 @@ class EquipoLaboratorio {
         }
         return $result;
     }
-    
-    public function getEquipoByTipoUsuario($equipo, $usuario){
-        $where = "where e.tipo_equipo= {$equipo}";
-        
-        if($usuario != null){
-           $where.= " and e.usuario_id = {$usuario}";
-        }
-        return $this->getAll($where);
-    }
-  
-        public function getEquipoById($equipo){
-        $where = "where e.id= {$equipo}";
-        return $this->getAll($where);
-    }
-    
-    public function getEquiposMantenimiento(){
-        $where = " where e.fecha_mantenimiento <= DATE_ADD(curdate(), INTERVAL -5 month) OR e.fecha_mantenimiento is null order by e.id desc";
-             return $this->getAll($where);
-    }
-    
-       public function ultimoEquipoTipoEquipo(){
-       $sql = "select e.* from catalogo_equipos_computo e where e.tipo_equipo={$this->getTipoEquipo()} order by e.id desc limit 1";
-        $query = $this->db->query($sql);
-        return $query->fetch_object();
-  }
 
 }

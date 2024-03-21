@@ -613,6 +613,54 @@ CONSTRAINT fk_movimiento_servicio FOREIGN KEY (servicio_id) REFERENCES servicios
 CONSTRAINT fk_movimiento_almacen FOREIGN KEY (almacen_id) REFERENCES catalogo_almacenes (id)
 )ENGINE=InnoDb DEFAULT CHARSET=utf8;
 
+create table catalogo_pruebas_laboratorio(
+id int(20) auto_increment not null,
+nombre varchar(50) not null,
+descripcion varchar(300),
+constraint pk_prueba PRIMARY KEY(id),
+constraint uq_nombre unique(nombre)
+)ENGINE=InnoDb DEFAULT CHARSET=utf8;
+
+create table catalogo_marcas_equipos_laboratorio(
+id int(20) auto_increment not null,
+nombre varchar(50) not null,
+descripcion varchar(300),
+constraint pk_prueba PRIMARY KEY(id),
+constraint uq_nombre unique(nombre)
+)ENGINE=InnoDb DEFAULT CHARSET=utf8;
+
+create table catalogo_equipos_laboratorio(
+id int(20) auto_increment not null,
+estatus_id int(20) null,
+unidad_id int(5) not null,
+codigo varchar (30) not null,
+nombre varchar (30) not null,
+marca int(5) not null,  
+modelo varchar (30) not null,
+numero_serie varchar (40) not null,
+intervalo_uso varchar (30) null,
+intervalo_trabajo varchar (30) null,
+intervalo_prueba varchar (30) null,
+puntos_calibrar varchar (30) null,
+factura varchar (30) null,
+fecha_alta date null,
+fecha_baja date null,
+fecha_calibracion date null,
+doc_factura varchar (30) null,
+doc_calibracion varchar (30) null,
+observaciones varchar(1000) null,
+constraint uq_codigo unique(codigo),
+constraint fk_equipo_estatus foreign key(estatus_id) references catalogo_estatus(id),
+constraint pk_equipo_computo PRIMARY KEY(id)
+)ENGINE=InnoDb DEFAULT CHARSET=utf8;
+
+create table catalogo_pruebas_equipos_laboratorio(
+prueba_id int(5) not null, 
+equipo_id int(5) no null,
+constraint fk_prueba foreign key(prueba_id) references catalogo_pruebas_laboratorio(id),
+constraint fk_equipo foreign key(equipo_id) references catalogo_equipos_laboratorio(id),
+)ENGINE=InnoDb DEFAULT CHARSET=utf8;
+
 create VIEW view_directorio as select concat(u.nombres, ' ', u.apellidos) as nombre, u.correo, u.telefono FROM catalogo_usuarios u 
 union select p.nombre, p.correo, p.telefono from catalogo_proveedores p union select p.nombre, p.correo1, p.telefono from catalogo_proveedores p where correo1 != "" 
 union select p.nombre, p.correo2, p.telefono from catalogo_proveedores p where correo2 != "" 

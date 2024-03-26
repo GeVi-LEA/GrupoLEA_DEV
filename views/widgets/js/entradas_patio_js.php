@@ -8,7 +8,7 @@ var detalle_lotes = {};
 
 
 $(document).ready(function() {
-    console.log("entra en lista de unidades");
+    //console.log("entra en lista de unidades");
     llenatablaestatus();
     // swal.close();
 });
@@ -17,7 +17,7 @@ const chart_entradas = () => {
 
     //import * as echarts from 'echarts';
     // console.log($("#chart_entradas"));
-    console.log("arma chart_entradas");
+    //console.log("arma chart_entradas");
     $("#chart_entradas").html("").attr("_echarts_instance_", "");
     data_estatus = [];
     data_colores = [];

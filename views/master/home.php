@@ -14,6 +14,17 @@
 
     </div>
     <div class='col-6'>
-        <?php require_once views_root . 'widgets/almacenaje_naves.php'; ?>
+        <div class='row'>
+            <div class='col-12'>
+                <?php require_once views_root . 'widgets/almacenaje_naves.php'; ?>
+            </div>
+            <div class='col-12'>
+                <?php require_once views_root . 'widgets/ordenes_compra.php'; ?>
+            </div>
+            <div class='col-12'>
+                <?php require_once views_root . 'widgets/facturacion.php'; ?>
+            </div>
+        </div>
+
     </div>
 </div>

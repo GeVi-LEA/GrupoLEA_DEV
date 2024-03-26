@@ -49,8 +49,8 @@ define('ubicaciones_kansas', array(1 => 'Laredo, Tx.', 11 => 'Matamoros', 2 => '
 
 // Sistemas
 define('prioriodades', array(1          => 'Alta',         2 => 'Media',          3 => 'Baja'));
-define('tipoSolicitud', array(1         => 'Preventivo',   2 => 'Correctivo',     3 => 'Configuración', 4 => 'Instalación'));
-define('requerimientos', array(1        => 'Aplicaciones', 2 => 'Equipo cómputo', 3 => 'Red'));
+define('tipoSolicitud', array(1         => 'Preventivo',   2 => 'Correctivo',     3 => 'Configuración', 4 => 'Instalación', 5=> 'Desarrollo'));
+define('requerimientos', array(1        => 'Aplicaciones', 2 => 'Equipo cómputo', 3 => 'Red' ,  4 => 'Programación'));
 define('marcas_sistemas', array(1       => 'HP',           2 => 'Dell',           3 => 'Lenovo', 4 => 'ASUS',      5 => 'APPLE', 6 => 'Brother'));
 define('equipos_sistemas', array(1      => 'Laptop',       2 => 'PC',             3 => 'Movil',  4 => 'Impresora', 5 => 'Servidor'));
 define('aplicaciones_sistemas', array(1 => 'WIN PRO',      2 => 'Office 365',     3 => 'Antivirus'));

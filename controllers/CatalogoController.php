@@ -1116,14 +1116,14 @@ class catalogoController
     {
         Utils::deleteSession('result');
         Utils::deleteSession('errores');
-
         if (isset($_POST['nombre']) && $_POST['nombre'] != '' && isset($_POST['clave']) && $_POST['clave'] != '') {
             $trans = new TipoTransporte();
             $trans->setNombre($_POST['nombre']);
             $trans->setClave($_POST['clave']);
             $trans->setDescripcion($_POST['descripcion'] == '' ? 'S/D' : $_POST['descripcion']);
             $trans->setCap_Maxima($_POST['cap_maxima']);
-
+            $trans->setBascula($_POST['bascula'] == '' ? 0 : $_POST['bascula']);
+            $trans->setPuertas($_POST['puertas'] == '' ? 0 : $_POST['puertas']);
             $transportes = $trans->getAll();
             if (!empty($transportes)) {
                 $errores = array();
@@ -1141,6 +1141,8 @@ class catalogoController
                 } else {
                     $errores = UtilsHelp::validarNombreClaveExiste($transportes, $nombre, $clave);
                     if (count($errores) == 0) {
+                         $ultimo = ($trans->getUltimoId()) + 1;
+                         $trans->setId($ultimo);
                         $save                = $trans->save();
                         $_SESSION['errores'] = $errores;
                     } else {
@@ -1148,6 +1150,8 @@ class catalogoController
                     }
                 }
             } else {
+                $ultimo = ($trans->getUltimoId()) + 1;
+                $trans->setId($ultimo);
                 $save = $trans->save();
             }
             if ($save) {

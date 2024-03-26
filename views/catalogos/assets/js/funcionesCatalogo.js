@@ -141,6 +141,12 @@ $(document).ready(function () {
 		$("#activo") == undefined
 			? null
 			: $("#activo").val(trDatos.find("#activoTabla").html());
+		$("#bascula") == undefined
+			? null
+			: $("#bascula").val(trDatos.find("#basculaTabla").html());
+		$("#puertas") == undefined
+			? null
+			: $("#puertas").val(trDatos.find("#puertasTabla").html());            
 		$("#apellido") == undefined
 			? null
 			: $("#apellido").val(trDatos.find("#apellidoTabla").html());

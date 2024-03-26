@@ -344,6 +344,7 @@ nav.menu span a{
 
 .formulario input[type="password"],
 .formulario input[type="text"], 
+.formulario input[type="number"],
 .formulario select{
     font-size: 15px;
     margin-top: 5px;

@@ -11,6 +11,10 @@ $(document).ready(function() {
     //console.log("entra en lista de unidades");
     llenatablaestatus();
     // swal.close();
+
+    setTimeout(() => {
+        llenatablaestatus();
+    }, 10000);
 });
 
 const chart_entradas = () => {
@@ -107,9 +111,9 @@ const chart_entradas = () => {
         llenatablaestatus(params.data.id, params.data.name, params.data.clave);
     });
     swal.close();
-    setTimeout(() => {
-        llenatablaestatus();
-    }, 10000);
+
+
+
 }
 
 function llenatablaestatus() {

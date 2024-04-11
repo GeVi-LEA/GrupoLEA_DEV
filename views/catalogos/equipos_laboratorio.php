@@ -26,7 +26,7 @@
 <span id="mostrarForm">Agregar equipo</span>
 </nav>
 <section id="secForm">
-    <form action="<?= catalogosUrl ?>?controller=Catalogo&action=saveEquipoComputo" method="post" enctype="multipart/form-data" class=" w-100 px-4 formulario" id="formularioEquipoLaboratorio" >
+    <form action="<?= catalogosUrl ?>?controller=Catalogo&action=saveEquipoLaboratorio" method="post" enctype="multipart/form-data" class=" w-100 px-4 formulario" id="formularioEquipoLaboratorio" >
         <div class="divCancelar">
             <a id="cancel"> <span class= "material-icons i-cancel ml-5" title="Cancelar">disabled_by_default</span></a>
         </div>
@@ -89,19 +89,25 @@
             </div>
                 <div>
                 <label for="intervaloUso">Intervalo uso:</label>
-                <input type="text" name="factura" class="inputMedium" id="intervaloUso" maxlength="100" placeholder="Ej. 10 a 1000"/> 
+                <input type="number" name="intervaloUso[]" class="inputSmall" id="intervaloUsoMin" maxlength="10" placeholder="10"/> 
+                 <span>a</span>
+                <input type="number" name="intervaloUso[]" class="inputSmall" id="intervaloUsoMax" maxlength="10" placeholder="10"/> 
                 <span class="unidadMed"></span>
             </div>
         </div>     
-        <div class="row d-flex justify-content-between p-1"> 
+        <div class="row d-flex justify-content-between"> 
                 <div>
                 <label for="intervaloTrabajo">Intervalo trabajo:</label>
-                <input type="text" name="intervaloTrabajo" class="inputMedium" id="intervaloTrabajo" maxlength="100" placeholder="Ej. 10 a 1000"/> 
+                <input type="number" name="intervaloTrabajo[]" class="inputSmall" id="intervaloTrabajoMin" maxlength="10" placeholder="10"/> 
+                <span>a</span>
+                <input type="number" name="intervaloTrabajo[]" class="inputSmall" id="intervaloTrabajoMax" maxlength="10" placeholder="1000"/> 
                 <span class="unidadMed"></span>
             </div>
             <div>
                 <label for="intervaloPrueba">Intervalo prueba:</label>
-                <input type="text" name="intervaloPrueba" class="inputmedium" id="intervaloPrueba" maxlength="100" placeholder="Ej. 10 a 1000"/> 
+                <input type="number" name="intervaloPrueba[]" class="inputSmall" id="intervaloPruebaMin" maxlength="10" placeholder="10"/> 
+                 <span>a</span>
+                <input type="number" name="intervaloPrueba[]" class="inputSmall" id="intervaloPruebaMax" maxlength="10" placeholder="1000"/> 
                 <span class="unidadMed"></span>
             </div>
             <div>
@@ -121,20 +127,30 @@
             </div>
            <div>
                 <label for="fechaBaja">Fecha baja:</label>
-                <input type="text" name="fechaAlta" class="inputSelectMin" id="fechaAlta" disabled /> 
+                <input type="text" name="fechaBaja" class="inputSelectMin" id="fechaBaja" disabled /> 
             </div>
                   <div>
                 <label for="fechaCalibracion">Fecha calibración:</label>
                 <input type="text" name="fechaCalibracion" class="inputSelectMin" id="fechaCalibracion" disabled /> 
             </div>  
         </div>
-         <div class="row d-flex justify-content-between p-1">
-           <div>
-                <label for="procesador">Pruebas:</label>
-                <input type="text" name="procesador" class="inputSmall" id="procesador" maxlength="10" /> 
+         <div class="row d-flex justify-content-center p-1">
+                <div><label>Pruebas:</label></div>
+         </div>
+             <div class="row">
+                <div class="div-pruebas-lab" id="pruebas">   
+                    <?php
+                    if (!empty($pruebas)):
+                        foreach ($pruebas as $pr):
+                            ?>
+                            <div><input class="mr-1" type="checkbox" name="pruebas[]" value="<?= $pr->id?>"><span class="mr-3"><?= $pr->nombre ?></span></div>
+                            <?php
+                        endforeach;
+                    endif;
+                    ?>
+                </div>
             </div>
-            </div>
-                 <div class="row p-1">
+      <div class="row p-1">
            <div class="d-flex justify-content-start">
                 <label class="mt-3 mr-3" for="observaciones">Observaciones:</label>
                 <textarea name="observaciones" class="textarea-observaciones" id="observaciones"></textarea>

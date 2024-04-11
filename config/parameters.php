@@ -26,6 +26,8 @@ define('loginUrl', root_url . 'views/views/login/');
 define('controller_login', 'LoginController');
 define('controller_principal', 'PrincipalController');
 
+define('SALT', 'SALT');
+
 ini_set('display_errors', 1);
 
 define('GLM', array('id'                  => 1,                                  'clave'   => 'GLM',     'nombre' => 'GRUPO LEA DE MÉXICO S. DE R.L. DE C.V.',             'direccion' => 'CARRETERA  A  COLOMBIA KM.  30.2',
@@ -63,4 +65,4 @@ define('unidades_medida', array(1 => '&deg;C', 2 => '%', 3 =>'&deg;API', 4 => 'c
         7 =>'ft/min', 8 =>'g', 9 =>'g/cm&sup3;', 10 =>'hPa/&deg;C/%HR', 11 =>'Kg', 12 =>'KV', 13 =>'L/min', 14 =>'mm&sup2;/s',
         15 =>'mN/m', 16 =>'&deg;C/%HR', 17 =>'p.p.m', 18 =>'s'));
 
-define('estatus_equipos', array(1 => 'Activo', 2 =>'Inactivo', 3 => 'Baja'));        
+define('estatus_equipos', array(1 => 'Activo', 2 =>'Inactivo', 3 => 'Baja')); 

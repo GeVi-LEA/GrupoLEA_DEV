@@ -2363,6 +2363,9 @@ class catalogoController
 
         $m = new MarcaEquipoLaboratorio();
         $marcas = $m->getAll();
+
+        $p= new PruebaLaboratorio();
+        $pruebas = $p->getAll();
         
         require '../../views/catalogos/equipos_laboratorio.php';
     }
@@ -2372,50 +2375,52 @@ class catalogoController
         Utils::deleteSession('result');
         Utils::deleteSession('errores');
 
-        if (isset($_POST['tipoEquipo']) && $_POST['modelo'] != '' && isset($_POST['marca']) && $_POST['serie'] != '') {
+        var_dump($_POST);
+       // die();
+  
+        if (isset($_POST['marcaId']) && $_POST['modelo'] != '' && isset($_POST['nombre'])) {
             $id              = $_POST['id'] != '' ? $_POST['id'] : null;
-            $tipoEquipo      = $_POST['tipoEquipo'];
+            $nombre =$_POST['nombre'];
+            $marca     = $_POST['marcaId'];
             $modelo          = $_POST['modelo'];
-            $marca           = $_POST['marca'];
             $serie           = $_POST['serie'];
+            $estatus         = $_POST['estatus'];
+            $unidadMedida    = $_POST['unidadMedida'];
             $factura         = $_POST['factura'];
+            $intervaloUso = $_POST['intervaloUso'];
+            $intervaloTrabajo = $_POST['intervaloTrabajo'];
+            $intervaloPrueba= $_POST['intervaloPrueba'];
+            $puntosCalibrar = $_POST['puntosCalibrar'];
             $fechaAlta       = $_POST['fechaAlta'] == '' ? null : str_replace('/', '-', $_POST['fechaAlta']);
-            $procesador      = $_POST['procesador'];
-            $discoDuro       = $_POST['discoDuro'];
-            $ram             = $_POST['ram'];
-            $usuario         = $_POST['usuarioId'];
-            $fechaAsignacion = $_POST['fechaAsignacion'] == '' ? null : str_replace('/', '-', $_POST['fechaAsignacion']);
-            $macEthernet     = $_POST['macEthernet'];
-            $macWifi         = $_POST['macWifi'];
-            $aplicaciones    = isset($_POST['aplicaciones']) ? $_POST['aplicaciones'] : '';
+            
             $observaciones   = $_POST['observaciones'];
 
-            $equipo = new EquipoComputo();
-            $equipo->setTipoEquipo($tipoEquipo);
-            $equipo->setUsuarioId($usuario != '' ? $usuario : 'null');
+            $equipo = new EquipoLaboratorio();
+            
+            $equipo->setEstatusId($estatus);
+            $equipo->setUnidadId($unidadMedida);
             $equipo->setModelo($modelo);
+            $equipo->setNombre($nombre);
             $equipo->setNumeroSerie($serie);
             $equipo->setMarca($marca);
-            $equipo->setFactura($factura);
-            $equipo->setProcesador($procesador);
-            $equipo->setMemoriaRam($ram);
-            $equipo->setdiscoDuro($discoDuro);
-            $equipo->setFechaCompra($fechaAlta != null ? date('Y-m-d', strtotime($fechaAlta)) : null);
-            $equipo->setFechaAsignacion($fechaAsignacion != null ? date('Y-m-d', strtotime($fechaAsignacion)) : null);
-            $equipo->setRedLan($macEthernet);
-            $equipo->setRedWifi($macWifi);
-            $equipo->setAplicaciones(json_encode($aplicaciones));
+            $equipo->setIntervaloUso(empty($intervaloUso) ? "" : implode(",",$intervaloUso));
+            $equipo->setIntervaloTrabajo(empty($intervaloTrabajo) ? "" : implode(",",$intervaloTrabajo));
+            $equipo->setIntervaloPrueba(empty($intervaloPrueba) ? "" : $intervaloPrueba);
+            $equipo->setPuntosCalibrar($puntosCalibrar);
+            $equipo->setFechaAlta($fechaAlta != null ? date('Y-m-d', strtotime($fechaAlta)) : null);
+           // $equipo->setFechaAsignacion($fechaAsignacion != null ? date('Y-m-d', strtotime($fechaAsignacion)) : null);
             $equipo->setObservaciones($observaciones);
 
             if ($id != null) {
                 $equipo->setId($id);
                 $save = $equipo->edit();
             } else {
-                $ultimo      = $equipo->ultimoEquipoTipoEquipo();
-                $folio       = $ultimo->folio != null ? $ultimo->folio : 'LLM-' . $tipoEquipo . '-0';
-                $ultimoFolio = substr($folio, strrpos($folio, '-') + 1);
-                $sigFolio    = 'LLM-' . $tipoEquipo . '-' . ($ultimoFolio + 1);
-                $equipo->setFolio($sigFolio);
+                $ultimo      = $equipo->ultimoEquipoLaboratorio();
+            
+                $codigo      = $ultimo != null ? $ultimo->codigo : 'LEQ-0';
+                $ultimoCodigo = substr($codigo, strrpos($codigo, '-') + 1);
+                $sigFolio    = 'LEQ-' . ($ultimoCodigo + 1);
+                $equipo->setCodigo($sigFolio);
                 $save = $equipo->save();
             }
             header('Location:' . catalogosUrl . '?controller=Catalogo&action=showEquipoComputo');

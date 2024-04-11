@@ -180,7 +180,7 @@ class EquipoLaboratorio {
     }
 
     public function save() {
-        $sql = "insert into catalogo_equipos_laboratorio values(null, {$this->getPruebaId()},  {$this->getEstatusId()}, {$this->getUnidadId()}, '{$this->getCodigo()}',"
+        $sql = "insert into catalogo_equipos_laboratorio values(null, {$this->getEstatusId()}, {$this->getUnidadId()}, '{$this->getCodigo()}',"
         . "'{$this->getNombre()}', {$this->getMarca()}, '{$this->getModelo()}', '{$this->getNumeroSerie()}', '{$this->getIntervaloUso()}', '{$this->getIntervaloTrabajo()}', "
         . "'{$this->getIntervaloPrueba()}', '{$this->getPuntosCalibrar()}', '{$this->getFactura()}', now(), null,";
 
@@ -190,7 +190,7 @@ class EquipoLaboratorio {
                 }  else{
                     $sql.="null, ";
                 }
-                  $sql.="'{$this->docFactura()}', '{$this->docCalibracion()}','{$this->getObservaciones()}');";
+                  $sql.="'{$this->getDocFactura()}', '{$this->getDocCalibracion()}','{$this->getObservaciones()}');";
      
         $save = $this->db->query($sql);
         $result = false;
@@ -215,5 +215,11 @@ class EquipoLaboratorio {
         }
         return $result;
     }
+
+    public function ultimoEquipoLaboratorio(){
+       $sql = "select e.* from catalogo_equipos_laboratorio e order by e.id desc limit 1";
+        $query = $this->db->query($sql);
+        return $query->fetch_object();
+  }
 
 }

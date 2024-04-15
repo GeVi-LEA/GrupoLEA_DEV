@@ -1,0 +1,1 @@
+ where  e.estatus_id != 2 and    p.fecha_pedimento between '2024-04-17' and '2024-04-20'  order by  p.fecha_pedimento asc;

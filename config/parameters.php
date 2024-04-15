@@ -14,6 +14,7 @@ define('assets_root', base . '/assets/');
 define('config_root', base . '/config/');
 define('models_root', base . '/models/');
 define('utils_root', base . '/utils/');
+define('logs_root', base . '/utils/logs/logs.log');
 define('views_root', base . '/views/');
 define('controller_root', base . '/controllers/');
 define('controller_default_catalogos', 'CatalogoController');

@@ -108,7 +108,8 @@ const buscaServicios = () => {
         url: __url__ + '?ajax&controller=Servicios&action=getServicios',
         data: {
             clientes: $("#cmbClientes").val().join(", "),
-            fechas: $("#fechas-startend").val()
+            fechas: $("#fechas-startend").val(),
+            tiposervicios: null
         },
         method: 'POST',
         dataType: "json",

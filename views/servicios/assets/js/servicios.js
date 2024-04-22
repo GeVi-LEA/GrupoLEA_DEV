@@ -428,6 +428,7 @@ $(document).ready(function () {
 		}
 	});
 	$("#chofer").change(function () {
+		console.log($("#chofer option:selected").val());
 		if ($("#chofer option:selected").val() == "nuevo") {
 			windowToOpen = window.open(__url__ + "views/catalogos/?controller=Catalogo&action=showChoferesTransportistas", "_blank");
 			windowToOpen.addEventListener(
@@ -454,6 +455,7 @@ $(document).ready(function () {
 			);
 		} else {
 			// getChoferes($("#transportista option:selected").val());
+			console.log("aca");
 		}
 	});
 
@@ -629,7 +631,7 @@ $(document).ready(function () {
 						false
 					);
 				} else {
-					getChoferes($("#transportista option:selected").val());
+					// getChoferes($("#transportista option:selected").val());
 				}
 			});
 		}
@@ -1842,7 +1844,7 @@ $(document).ready(function () {
 					false
 				);
 			} else {
-				getChoferes($("#transportista option:selected").val());
+				// getChoferes($("#transportista option:selected").val());
 			}
 		});
 	}

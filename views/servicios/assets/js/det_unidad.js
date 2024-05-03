@@ -663,7 +663,7 @@ $(document).ready(function () {
 		$("#existencia").parent("div").hide();
 		$("#lote_confirm").parent("div").attr("hidden", true);
 		// $.fn.modal.Constructor.prototype.enforceFocus = function () {};
-		serv_entrada = $(this).parent("div").parent("div").parent().closest("div").find("[name='tipo_producto']:checked").val();
+		serv_entrada = $(this).parents("#datos_unidad").find("[name='tipo_producto']:checked").val();
 		//console.log(serv_entrada);
 		$(".calctarimas div").attr("hidden", true);
 		$("#agregarServicioModal").modal("show");
@@ -2057,9 +2057,10 @@ function agregarLotesEnsacado(form, tipo_producto = "") {
 	$("#existencia").val("");
 	//   $(form).find($("#idTipoServicio")).attr("disabled", true);
 	if (servicio.includes("CARGA") || servicio.includes("SALIDA DE") || servicio.includes("AJUSTE")) {
-		lote.attr("disabled", true).attr("hidden", true);
-		//console.log("aqui");
-		console.log("servicio_edit.lote: ", servicio.lote);
+		$("#lote").attr("disabled", true).attr("hidden", true);
+		$("#agregarServicioModal").find("#lote").attr("disabled", true).attr("hidden", true);
+		// console.log("aqui");
+		// console.log("servicio_edit.lote: ", servicio.lote);
 		selectLote.attr("disabled", false).attr("hidden", false);
 		$("#producto").attr("disabled", true).attr("hidden", true);
 		$("#alias").attr("disabled", true).attr("hidden", true);
@@ -2250,7 +2251,7 @@ function validaInventario(form, linea = "") {
 		if (!form.includes("#")) {
 			form = "#" + form;
 		}
-		console.log("validainv - ", form);
+		console.log("validainv - ", form, " linea: ", linea);
 		let cantidad = parseFloat(quitarComasNumero($(form).find("#cantidad").val()));
 
 		var tiposervicio = $(form).find("#idTipoServicio option:selected").val();
@@ -2268,6 +2269,7 @@ function validaInventario(form, linea = "") {
 				.find("#disponible_lote")
 				.val(htmlNum($(form).find("#loteSelect").find(":selected").attr("data-disponible")));
 			$("#disponible_lote").parent("div").parent().attr("hidden", false);
+			$("#disponible_lote").parent("div").attr("hidden", false);
 			// $(form).find("#idTipoServicio option:selected").val()
 			// );
 			// ////console.log("tiposerv: ", $("#idTipoServicio option:selected").val());

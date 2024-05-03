@@ -970,6 +970,10 @@ function ROFinaliza($estatus)
                                     </select>
                                 </div>
                                 <div class='col' hidden>
+                                    <label for="disponible_lote" class="form-label">Disponible</label>
+                                    <input type="text" name="disponible_lote" id="disponible_lote" class="form-control" />
+                                </div>
+                                <div class='col' hidden>
                                     <label for="lote_confirm" class="form-label">Confirmar Lote</label>
                                     <input type="text" name="lote_confirm" id="lote_confirm" class="form-control" />
                                 </div>

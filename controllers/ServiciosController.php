@@ -1152,7 +1152,7 @@ class serviciosController
         if (isset($_POST['idCliente']) && $_POST['idCliente'] != '') {
             $s             = new ServicioEnsacado();
             $idCli         = $_POST['idCliente'];
-            $tipo_producto = $_POST['tipo_producto'];
+            $tipo_producto = isset($_POST['tipo_producto']) ? $_POST['tipo_producto'] : '0';
             if ($tipo_producto == '1') {
                 $s = new ServicioLubricante();
             }

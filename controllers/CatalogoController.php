@@ -1946,6 +1946,7 @@ class catalogoController
             $tipo = new TipoEmpaque();
             $tipo->setNombre($_POST['nombre']);
             $tipo->setDescripcion($_POST['descripcion']);
+            $tipo->setPesoSugerido($_POST['peso_sugerido']);
 
             if ($_POST['id'] != null || $_POST['id'] != '') {
                 $tipo->setId($_POST['id']);

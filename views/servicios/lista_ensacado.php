@@ -232,12 +232,12 @@ include 'assets/js/graficas_entradas_js.php';
     </div>
     <div class='col-12' id="div-grafica" style="display:none">
         <div class='row'>
-            <div class='col-md-5 col-12'>
+            <div class='col-xl-5 col-12'>
                 <div id='chart_entradas' style='min-height:500px;'></div>
             </div>
-            <div class='col-md-7 col-12'>
+            <div class='col-xl-7 col-12'>
                 <div class='row' style="float: right;">
-                    <div class="col-4 menu-iconos d-flex justify-content-end">
+                    <div class="col-12 menu-iconos d-flex justify-content-end">
 
                         <div class="mr-1"><i id="lista" title="Lista" data-tipo="lista" class="btn-tab material-icons fa-solid fa-list" style="color:orange;"></i></div>
                         <div class="mr-1"><i id="grafica" title="Gráfica" data-tipo="grafica" class="btn-tab material-icons fa-solid fa-chart-simple " style="color:blue;"></i></div>
@@ -246,7 +246,7 @@ include 'assets/js/graficas_entradas_js.php';
                         <div class="mr-1"><i id="entradaSalida" title="Entrada / Salida" class="i-clip material-icons fa-solid fa-file-circle-plus"></i></div>
                     </div>
                 </div>
-                <div class='row' style="margin-top: 50px;">
+                <div class='row' style="margin-top: 50px;width:40vw;">
 
 
                     <h1 id="tituloestatus" style="border-radius: 10px; text-align: center; padding: 10px;"></h1>
@@ -260,8 +260,20 @@ include 'assets/js/graficas_entradas_js.php';
                             <th>BÁSCULA</th>
                             <th>FECHA LLEGADA</th>
                         </thead>
+                        <tfoot>
+                            <tr>
+                                <th hidden>id</th>
+                                <th hidden>idensacado</th>
+                                <th>FT/AT</th>
+                                <th>NUM. UNIDAD</th>
+                                <th>CLIENTE</th>
+                                <th>BÁSCULA</th>
+                                <th>FECHA LLEGADA</th>
+                            </tr>
+                        </tfoot>
                         <tbody>
                         </tbody>
+
                     </table>
                 </div>
             </div>

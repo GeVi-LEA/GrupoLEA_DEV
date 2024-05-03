@@ -53,7 +53,7 @@ $(document).ready(function () {
 			showConfirmButton: false,
 			position: "top",
 			width: "75vw",
-			html: `<iframe id="iframe_servicio" style="width:100%; height:50vh;" src="${__url__}?controller=Servicios&action=crearEntrada" frameborder="0"></iframe>`,
+			html: `<iframe id="iframe_servicio" style="width:100%; height:70vh;" src="${__url__}?controller=Servicios&action=crearEntrada" frameborder="0"></iframe>`,
 			didOpen: () => {
 				$("iframe").on("load", function () {
 					$(this)
@@ -480,7 +480,7 @@ $(document).ready(function () {
 	$("#btnGuardar").click(function (e) {
 		e.preventDefault();
 		if (validarDatosEnsacado()) {
-			$("#ensacadoForm").find("input, select").removeAttr("disabled");
+			$("#ensacadoForm").find("input, select").removeAttr("disabled").removeAttr("readonly");
 			var datosForm = new FormData($("#ensacadoForm")[0]);
 			//console.log(datosForm);
 			datosForm.append("peso_obligatorio", $("#peso_obligatorio").prop("checked") ? 1 : 0);
@@ -572,7 +572,7 @@ $(document).ready(function () {
 		if (($('input[name="ferrotolva"]:checked').val() != null && $('input[name="ferrotolva"]:checked').val() != "F") || $("#isferrotolva").length == 0) {
 			try {
 				$("#transportista").select2({
-					// theme: "bootstrap-5",
+					theme: "bootstrap-5",
 				});
 			} catch (error) {}
 			$(".transportista").unbind();
@@ -1785,7 +1785,7 @@ $(document).ready(function () {
 	if (($('input[name="ferrotolva"]:checked').val() != null && $('input[name="ferrotolva"]:checked').val() != "F") || $("#isferrotolva").length == 0) {
 		try {
 			$("#transportista").select2({
-				// theme: "bootstrap-5",
+				theme: "bootstrap-5",
 			});
 		} catch (error) {}
 		$(".transportista").unbind();
@@ -2382,7 +2382,7 @@ function getChoferes(transp_id) {
 				}
 				try {
 					$("#chofer").select2({
-						// theme: "bootstrap-5",
+						theme: "bootstrap-5",
 					});
 				} catch (error) {}
 			}
@@ -2514,14 +2514,14 @@ function diferenciaTeoricaColor(diferenciaTeorica, tolerable) {
 }
 
 function getOperacionServicios($servicios) {
-	$operacion = "<i class='fa-solid fa-arrow-right i-green'  title='Descarga'></i>";
+	$operacion = "<i class='fa-solid fa-arrow-right i-green'  title='Descarga'> DES</i>";
 	try {
 		// //console.log($servicios);
 		if ($servicios.length > 0) {
 			for (var x = 0; x < $servicios.length; x++) {
 				// //console.log($servicios[x]);
 				if ($servicios[x]["claveServ"].toUpperCase() == "CARGA") {
-					$operacion = "<i class='fa-solid fa-arrow-left i-red'  title='Carga'></i>";
+					$operacion = "<i class='fa-solid fa-arrow-left i-red'  title='Carga'> CAR</i>";
 				}
 			}
 			// $servicios.each(function (servicio) {
@@ -2537,6 +2537,17 @@ function getOperacionServicios($servicios) {
 	} catch (error) {
 		console.log("error getOperacionServicios: ", error);
 	}
+	return $operacion;
+}
+
+function getOperacionServicios2(entrada_salida) {
+	$operacion = "<i class='fa-solid fa-arrow-right i-green'  title='Descarga'> DES</i>";
+	if (entrada_salida == "0") {
+		$operacion = "<i class='fa-solid fa-arrow-right i-green'  title='Descarga'>  ENTRADA</i>";
+	} else if (entrada_salida == "1") {
+		$operacion = "<i class='fa-solid fa-arrow-left i-red'  title='Carga'>  SALIDA</i>";
+	}
+
 	return $operacion;
 }
 

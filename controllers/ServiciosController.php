@@ -157,7 +157,9 @@ class serviciosController
 
         $catChoferes  = new ChoferTransportista();
         $cat_choferes = $catChoferes->getAll();
-        require_once views_root . 'servicios/ensacado.php';
+        // require_once views_root . 'servicios/ensacado.php';
+        $diferenciaReal = intval($ensacado['peso_neto']) - intval($ensacado['total_ensacado']);
+        require_once views_root . 'servicios/det_unidad.php';
     }
 
     public function reglamento()
@@ -601,6 +603,7 @@ class serviciosController
         $almacen_id      = isset($_POST['almacen_id']) && $_POST['almacen_id'] != '' ? $_POST['almacen_id'] : '1';
         $alias           = isset($_POST['alias']) && $_POST['alias'] != '' ? $_POST['alias'] : null;
         $sacoxtarima     = isset($_POST['sacoxtarima']) && $_POST['sacoxtarima'] != '' ? $_POST['sacoxtarima'] : null;
+        $peso_empaque    = isset($_POST['pesounidad_cantidad']) && $_POST['pesounidad_cantidad'] != '' ? $_POST['pesounidad_cantidad'] : null;
         $tarima_por      = isset($_POST['tarima_por']) && $_POST['tarima_por'] != '' ? $_POST['tarima_por'] : 1;
         $observaciones   = isset($_POST['observaciones']) && $_POST['observaciones'] != '' ? $_POST['observaciones'] : null;
         $res             = true;
@@ -632,13 +635,14 @@ class serviciosController
             $servicio->setBarreduraLimpia($barreduraLimpia != null ? Utils::stringToFloat($barreduraLimpia) : 'null');
             $servicio->setBultos($bultos != null ? Utils::stringToFloat($bultos) : 'null');
             $servicio->setTarimas($tarimas != null ? Utils::stringToFloat($tarimas) : 'null');
-            $servicio->setTipoTarima($tipoTarima != null ? Utils::stringToFloat($tipoTarima) : 'null');
+            $servicio->setTipoTarima($tipoTarima != null ? Utils::stringToFloat($tipoTarima) : '2');
             $servicio->setParcial($parcial != null ? Utils::stringToFloat($parcial) : 'null');
             $servicio->setProductoId($productoId);
             $servicio->setAlmacenId($almacen_id);
             $servicio->setAlias($alias);
             $servicio->setLote($lote);
             $servicio->setSacoXTarima($sacoxtarima);
+            $servicio->setPesoEmpaque($peso_empaque);
             $servicio->setTarimaPor($tarima_por);
             $servicio->setOrden($orden);
 

@@ -153,7 +153,7 @@ function llamaNotificaciones() {
                                                                               <h6>${var_notificaciones[(x)].titulo}</h6>
                                                                         </div>
                                                                         <div class="col-12">
-                                                                              <span>${var_notificaciones[(x)].mensaje}</span>
+                                                                              <span>${var_notificaciones[(x)].mensaje.toUpperCase()}</span>
                                                                         </div>
                                                                   </div>
                                                                   <div class="row">

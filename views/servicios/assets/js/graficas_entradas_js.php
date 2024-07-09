@@ -207,12 +207,14 @@ function llenatablaestatus(id_estatus, estatus, clave) {
         });
         table = new DataTable('#tabla_estatus', {
             dom: 'Bfrtip',
-            retrieve: true,
-            // responsive: true,
-            // scrollCollapse: true,
+            // retrieve: true,
+            paging: false,
+            // responsive: false,            
             scrollY: '40vh',
+            scrollCollapse: true,
+            scrollX: true,
             // scrollX: true,
-            // fixedColumns: true,
+            // fixedColumns: false,
             language: {
                 url: '<?php echo URL; ?>assets/libs/datatables/es-MX.json',
             },
@@ -255,7 +257,7 @@ function llenatablaestatus(id_estatus, estatus, clave) {
                     .search(this.value)
                     .draw();
             });
-
+            // table.columns.adjust().draw();
         }, 1000);
     }).fail(resp => {}).catch(resp => {
         // mensajeError('Ocurrio un problema en la peticion en el servidor, favor de reportar a los administradores');

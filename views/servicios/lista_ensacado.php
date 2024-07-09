@@ -250,7 +250,7 @@ include 'assets/js/graficas_entradas_js.php';
 
 
                     <h1 id="tituloestatus" style="border-radius: 10px; text-align: center; padding: 10px;"></h1>
-                    <table id="tabla_estatus" class=' stripe' style='width:90%'>
+                    <table id="tabla_estatus" class=' table-striped table-hover ' style='width:90%'>
                         <thead>
                             <th hidden>id</th>
                             <th hidden>idensacado</th>
@@ -260,6 +260,8 @@ include 'assets/js/graficas_entradas_js.php';
                             <th>BÁSCULA</th>
                             <th>FECHA LLEGADA</th>
                         </thead>
+                        <tbody>
+                        </tbody>
                         <tfoot>
                             <tr>
                                 <th hidden>id</th>
@@ -271,8 +273,6 @@ include 'assets/js/graficas_entradas_js.php';
                                 <th>FECHA LLEGADA</th>
                             </tr>
                         </tfoot>
-                        <tbody>
-                        </tbody>
 
                     </table>
                 </div>
